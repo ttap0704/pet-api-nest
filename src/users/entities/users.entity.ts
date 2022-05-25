@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Business } from 'src/business/entities/business.entity';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Users {
@@ -33,7 +34,7 @@ export class Users {
   @Column({
     type: 'varchar',
     length: 15,
-    nullable: false
+    nullable: true
   })
   phone: string;
 
@@ -65,7 +66,7 @@ export class Users {
     type: 'smallint',
     nullable: false
   })
-  type: string
+  type: number
 
   @Column({
     type: 'tinyint',
@@ -73,4 +74,17 @@ export class Users {
     nullable: false
   })
   certification: number;
+
+  @CreateDateColumn()
+  created_at!: Date;
+
+  @UpdateDateColumn()
+  updated_at!: Date;
+
+  @DeleteDateColumn()
+  deleted_at!: Date;
+
+  @OneToOne(() => Business)
+  @JoinColumn({ name: 'business_id' })
+  business: Business
 }
