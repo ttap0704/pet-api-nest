@@ -13,7 +13,8 @@ export class Users {
   @Column({
     type: 'varchar',
     length: 100,
-    nullable: false
+    nullable: false,
+    unique: true
   })
   login_id: string;
 
@@ -75,6 +76,12 @@ export class Users {
   })
   certification: number;
 
+  @Column({
+    type: 'int',
+    nullable: true
+  })
+  business_id: number;
+
   @CreateDateColumn()
   created_at!: Date;
 
@@ -84,7 +91,7 @@ export class Users {
   @DeleteDateColumn()
   deleted_at!: Date;
 
-  @OneToOne(() => Business)
+  @OneToOne(() => Business, (business: Business) => business.id)
   @JoinColumn({ name: 'business_id' })
   business: Business
 }

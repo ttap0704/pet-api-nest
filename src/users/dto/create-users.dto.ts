@@ -1,4 +1,6 @@
+import { Optional } from "@nestjs/common";
 import { IsNumber, IsString } from "class-validator";
+import { Business } from "src/business/entities/business.entity";
 
 export class CreateUsersDto {
   @IsString()
@@ -14,5 +16,11 @@ export class CreateUsersDto {
   readonly nickname: string;
 
   @IsNumber()
-  readonly type: number;
+  type: number;
+
+  @Optional()
+  business_id: number;
+
+  @Optional()
+  business: Business
 }

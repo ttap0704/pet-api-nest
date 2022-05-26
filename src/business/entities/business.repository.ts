@@ -5,6 +5,7 @@ import { Business } from './business.entity';
 @EntityRepository(Business)
 export class BusinessRepository extends Repository<Business> {
   public async createBusiness(createData: CreateBusinessDto): Promise<Business> {
+    console.log(createData, 'business')
     const business = new Business();
 
     for (const [key, val] of Object.entries(createData)) {

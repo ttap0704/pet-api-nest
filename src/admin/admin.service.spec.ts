@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ManagerService } from './manager.service';
+import { AdminService } from './admin.service';
 
-describe('ManagerService', () => {
-  let service: ManagerService;
+describe('AdminService', () => {
+  let service: AdminService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ManagerService],
+      providers: [AdminService],
     }).compile();
 
-    service = module.get<ManagerService>(ManagerService);
+    service = module.get<AdminService>(AdminService);
   });
 
   it('should be defined', () => {

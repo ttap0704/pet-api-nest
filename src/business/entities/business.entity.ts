@@ -20,7 +20,8 @@ export class Business {
   @Column({
     type: 'varchar',
     length: 100,
-    nullable: false
+    nullable: false,
+    unique: true
   })
   b_no: string;
 

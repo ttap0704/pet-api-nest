@@ -2,10 +2,17 @@ import { Injectable } from '@nestjs/common';
 import fetch from 'node-fetch';
 import { CreateBusinessDto } from './dto/create-business.dto';
 import { ACCOMMODATION_BUSINESS_CODE_LIST } from '../../constant'
+import { InjectRepository } from '@nestjs/typeorm';
+import { BusinessRepository } from './entities/business.repository';
 
 @Injectable()
 export class BusinessService {
-  public async certificateBusiness(data: CreateBusinessDto): Promise<{ pass: boolean, messasge?: string }> {
+  constructor(
+    @InjectRepository(BusinessRepository)
+    private businessRepository: BusinessRepository
+  ) { }
+
+  public async certificateBusiness(data: CreateBusinessDto): Promise<{ pass: boolean, message?: string }> {
     const cert_data = {
       businesses: [
         {
@@ -14,6 +21,12 @@ export class BusinessService {
       ]
     }
     let pass = false;
+
+    const check_business = await this.businessRepository.findOne({ b_no: data.b_no });
+    if (check_business) {
+      return { pass: false, message: 'Already Join' }
+    }
+    console.log(check_business)
 
     // if (!ACCOMMODATION_BUSINESS_CODE_LIST.includes(data.b_type) && !RESTAURANT_BUSINESS_CODE_LIST.includes(data.b_type)) {
     //   return { pass, message: 'Not Target' };

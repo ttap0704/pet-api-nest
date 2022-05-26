@@ -14,7 +14,8 @@ export class UsersRepository extends Repository<Users> {
     user.nickname = createData.nickname;
     user.password = await hash(createData.password);
     user.type = createData.type;
-
+    user.business_id = createData.business_id;
+    user.business = createData.business;
 
     await this.save(user);
 
