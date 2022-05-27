@@ -11,6 +11,12 @@ export class UsersService {
     private usersRepository: UsersRepository
   ) { }
 
+  public async findUser(data: LoginUsersDto) {
+    console.log(data)
+    const { login_id } = data;
+    return await this.usersRepository.findOne({ login_id })
+  }
+
   public async loginUser(data: LoginUsersDto) {
     const { login_id, password } = data;
 

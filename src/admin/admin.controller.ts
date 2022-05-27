@@ -14,7 +14,6 @@ export class AdminController {
 
   @Post('/join')
   public async joinAdmin(@Body() data: CreateAdminDto) {
-    console.log(data)
     return await this.adminService.joinAdmin(data)
   }
 }

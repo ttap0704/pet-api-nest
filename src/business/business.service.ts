@@ -26,8 +26,6 @@ export class BusinessService {
     if (check_business) {
       return { pass: false, message: 'Already Join' }
     }
-    console.log(check_business)
-
     // if (!ACCOMMODATION_BUSINESS_CODE_LIST.includes(data.b_type) && !RESTAURANT_BUSINESS_CODE_LIST.includes(data.b_type)) {
     //   return { pass, message: 'Not Target' };
     // }

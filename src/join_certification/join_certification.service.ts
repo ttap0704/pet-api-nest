@@ -23,7 +23,7 @@ export class JoinCertificationService {
     } else {
       const compare = await isHashValid(cert_num, hash.cert_num)
       if (compare) {
-        await this.usersRepository.update({ certification: 1 }, { id: hash.admin_id })
+        await this.usersRepository.update({ id: hash.admin_id }, { certification: 1 })
         await this.joinCertificationRepository.delete({ id })
 
         return { pass: true }

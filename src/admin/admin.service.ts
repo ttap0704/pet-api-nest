@@ -43,7 +43,6 @@ export class AdminService {
       const check_nick = await this.usersRepository.findOne({ nickname: join_data.nickname })
       const check_login_id = await this.usersRepository.findOne({ login_id: join_data.login_id })
 
-      console.log(check_nick)
       if (check_nick) {
         return { pass: false, message: 'Duplicate Nickname' }
       } else if (check_login_id) {
