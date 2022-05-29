@@ -7,6 +7,9 @@ import { AdminModule } from './admin/admin.module';
 import { BusinessModule } from './business/business.module';
 import { JoinCertificationModule } from './join_certification/join_certification.module';
 import { AuthModule } from './auth/auth.module';
+import { AccommodationModule } from './accommodation/accommodation.module';
+import { AccommodationPeakSeasonModule } from './accommodation_peak_season/accommodation_peak_season.module';
+import { AccommodationViewsCountModule } from './accommodation_views_count/accommodation_views_count.module';
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { AuthModule } from './auth/auth.module';
     BusinessModule,
     JoinCertificationModule,
     AuthModule,
+    AccommodationModule,
+    AccommodationPeakSeasonModule,
+    AccommodationViewsCountModule,
   ],
   controllers: [AppController],
   providers: [AppService],

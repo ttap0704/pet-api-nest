@@ -1,3 +1,4 @@
+import { Accommodation } from 'src/accommodation/entities/accommodation.entity';
 import { Business } from 'src/business/entities/business.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
@@ -82,6 +83,13 @@ export class Users {
   })
   business_id: number;
 
+  @Column({
+    type: 'varchar',
+    nullable: true,
+    default: null
+  })
+  refresh_token: string;
+
   @CreateDateColumn()
   created_at!: Date;
 
@@ -94,4 +102,7 @@ export class Users {
   @OneToOne(() => Business, (business: Business) => business.id)
   @JoinColumn({ name: 'business_id' })
   business: Business
+
+  @OneToMany(() => Accommodation, (accommodation) => accommodation.id)
+  accommodation_id: Accommodation[];
 }
