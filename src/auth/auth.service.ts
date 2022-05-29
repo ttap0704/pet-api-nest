@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Post } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LoginUsersDto } from 'src/users/dto/login-users.dto';
@@ -38,11 +38,20 @@ export class AuthService {
     }
   }
 
-  public async loginUser(user: LoginUsersDto) {
-    console.log(user)
-    const payload = { ...user, access_token: this.jwtService.sign({ ...user }), }
-    return {
-      payload
+  public async loginUser(user: { pass: boolean, user: Users }) {
+    const cur_user = user.user;
+    if (user.pass) {
+      return {
+        ...user,
+        token: this.jwtService.sign({
+          id: cur_user.id,
+          login_id: cur_user.login_id,
+          nickname: cur_user.nickname
+        })
+      }
+    } else {
+      return user;
     }
+
   }
 }

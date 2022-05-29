@@ -40,3 +40,4 @@ lerna-debug.log*
 
 # ETC
 ormconfig.ts
+/src/auth/constants.ts
