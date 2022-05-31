@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { AccommodationModule } from './accommodation/accommodation.module';
 import { AccommodationPeakSeasonModule } from './accommodation_peak_season/accommodation_peak_season.module';
 import { AccommodationViewsCountModule } from './accommodation_views_count/accommodation_views_count.module';
+import { RoomsModule } from './rooms/rooms.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { AccommodationViewsCountModule } from './accommodation_views_count/accom
     AccommodationModule,
     AccommodationPeakSeasonModule,
     AccommodationViewsCountModule,
+    RoomsModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

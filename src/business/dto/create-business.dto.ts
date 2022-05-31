@@ -1,6 +1,4 @@
-import { Optional } from "@nestjs/common";
-import { IsNumber, IsString } from "class-validator";
-import { CreateUsersDto } from "src/users/dto/create-users.dto";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 export class CreateBusinessDto {
 
@@ -22,11 +20,11 @@ export class CreateBusinessDto {
   @IsString()
   readonly start_dt: string;
 
-  @Optional()
+  @IsOptional()
   @IsString()
   readonly p_nm2: string;
 
-  @Optional()
+  @IsOptional()
   @IsString()
   readonly corp_no: string;
 }
