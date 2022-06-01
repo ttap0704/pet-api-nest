@@ -12,6 +12,7 @@ import { AccommodationPeakSeasonModule } from './accommodation_peak_season/accom
 import { AccommodationViewsCountModule } from './accommodation_views_count/accommodation_views_count.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { ImagesModule } from './images/images.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ImagesModule } from './images/images.module';
     AccommodationViewsCountModule,
     RoomsModule,
     ImagesModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

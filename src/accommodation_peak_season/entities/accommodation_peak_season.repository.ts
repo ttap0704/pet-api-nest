@@ -7,7 +7,6 @@ export class AccommodationPeakSeasonRepository extends Repository<AccommodationP
   public async createAccommodationPeakSeasons(data: CreateAccommodationPeakSeasonDto[]): Promise<AccommodationPeakSeason[]> {
     const seasons: AccommodationPeakSeason[] = []
 
-    console.log(data);
     for (const season_data of data) {
       const season = await this.save(season_data);
       seasons.push(season)

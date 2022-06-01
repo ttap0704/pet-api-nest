@@ -113,6 +113,6 @@ export class AdminService {
     }
     const seasons = await this.accommodationPeakSeasonRepository.createAccommodationPeakSeasons(peak_season_data)
 
-    return accommodation;
+    return { ...accommodation, rooms };
   }
 }

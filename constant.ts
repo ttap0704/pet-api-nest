@@ -5,6 +5,13 @@ export const EXPOSURE_MENU = 11;
 export const ENTIRE_MENU = 12;
 export const ROOMS = 21;
 
+export const RESTAURANT_ENG = 'restaurant';
+export const ACCOMMODATION_ENG = 'accommodation';
+
+export const EXPOSURE_MENU_ENG = 'exposure_menu';
+export const ENTIRE_MENU_ENG = 'entire_menu';
+export const ROOMS_ENG = 'rooms';
+
 export const CONTENTS_CODE: {
   [prop: string]: any;
 } = {
@@ -32,6 +39,15 @@ export const UPLOAD_PATH: {
   [EXPOSURE_MENU]: '/exposure_menu/',
   [ACCOMMODATION]: '/accommodation/',
   [ROOMS]: '/rooms/',
+};
+
+export const UPLOAD_PATH_ENG: {
+  [prop: string]: any;
+} = {
+  [RESTAURANT_ENG]: '/restaurant/',
+  [EXPOSURE_MENU_ENG]: '/exposure_menu/',
+  [ACCOMMODATION_ENG]: '/accommodation/',
+  [ROOMS_ENG]: '/rooms/',
 };
 
 export const CATEGORY_LIST: {
