@@ -98,7 +98,6 @@ export class Rooms {
   deleted_at!: Date;
 
   @ManyToOne(() => Accommodation, (accommodation: Accommodation) => accommodation.id)
-  @JoinColumn({ name: 'accommodation_id' })
   accommodation: Accommodation
 }
 

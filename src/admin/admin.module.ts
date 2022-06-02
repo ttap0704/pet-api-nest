@@ -4,6 +4,7 @@ import { AccommodationService } from 'src/accommodation/accommodation.service';
 import { AccommodationRepository } from 'src/accommodation/entities/accommodation.repository';
 import { AccommodationPeakSeasonRepository } from 'src/accommodation_peak_season/entities/accommodation_peak_season.repository';
 import { BusinessRepository } from 'src/business/entities/business.repository';
+import { ImagesRepository } from 'src/images/entities/images.repository';
 import { JoinCertificationRepository } from 'src/join_certification/entities/join_certification.repository';
 import { RoomsRepository } from 'src/rooms/entities/rooms.repository';
 import { UsersRepository } from 'src/users/entities/users.repository';
@@ -17,9 +18,10 @@ import { AdminService } from './admin.service';
     JoinCertificationRepository,
     AccommodationRepository,
     AccommodationPeakSeasonRepository,
-    RoomsRepository
+    RoomsRepository,
+    ImagesRepository
   ])],
   controllers: [AdminController],
-  providers: [AdminService]
+  providers: [AdminService, AccommodationService]
 })
 export class AdminModule { }

@@ -1,5 +1,6 @@
 import { AccommodationPeakSeason } from 'src/accommodation_peak_season/entities/accommodation_peak_season.entity';
 import { AccommodationViewsCount } from 'src/accommodation_views_count/entities/accommodation_views_count.entity';
+import { Rooms } from 'src/rooms/entities/rooms.entity';
 import { Users } from 'src/users/entities/users.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
@@ -121,10 +122,13 @@ export class Accommodation {
   @JoinColumn({ name: 'admin_id' })
   admin: Users
 
-  @OneToMany(() => AccommodationPeakSeason, (accommodation_peak_season) => accommodation_peak_season.id)
-  accommodation_peak_season_id: AccommodationPeakSeason[];
+  @OneToMany(() => Rooms, (rooms) => rooms.accommodation)
+  accommodation_rooms: Rooms[];
+
+  @OneToMany(() => AccommodationPeakSeason, (accommodation_peak_season) => accommodation_peak_season.accommodation)
+  accommodation_peak_season: AccommodationPeakSeason[];
 
   @OneToMany(() => AccommodationViewsCount, (accommodation_views_count) => accommodation_views_count.id)
-  accommodation_views_count_id: AccommodationViewsCount[];
+  accommodation_views_count: AccommodationViewsCount[];
 }
 

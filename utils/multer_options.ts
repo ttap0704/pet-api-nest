@@ -43,7 +43,12 @@ export const multerOptions: MulterOptions = {
     },
     filename: (request, file, callback) => {
       const name_splited = file.originalname.split('_');
-      const file_name = name_splited.slice(2).join('_');
+      let file_name = '';
+      if (['accommodation', 'restaurant'].includes(name_splited[0])) {
+        file_name = name_splited.slice(1).join('_')
+      } else {
+        file_name = name_splited.slice(2).join('_')
+      }
       callback(null, `${file_name}`);
     },
   }),

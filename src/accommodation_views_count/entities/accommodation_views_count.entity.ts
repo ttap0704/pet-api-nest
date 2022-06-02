@@ -25,7 +25,6 @@ export class AccommodationViewsCount {
   postdate: string;
 
   @ManyToOne(() => Accommodation, (accommodation: Accommodation) => accommodation.id)
-  @JoinColumn({ name: 'accommodation_id' })
   accommodation: Accommodation
 }
 

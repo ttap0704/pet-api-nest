@@ -102,14 +102,12 @@ export class AdminService {
     const rooms_data = data.rooms;
     for (const room of rooms_data) {
       room.accommodation = accommodation;
-      room.accommodation_id = accommodation.id
     }
     const rooms = await this.roomsRepository.createRooms(rooms_data);
 
     const peak_season_data = data.peak_season;
     for (const season of peak_season_data) {
       season.accommodation = accommodation;
-      season.accommodation_id = accommodation.id
     }
     const seasons = await this.accommodationPeakSeasonRepository.createAccommodationPeakSeasons(peak_season_data)
 

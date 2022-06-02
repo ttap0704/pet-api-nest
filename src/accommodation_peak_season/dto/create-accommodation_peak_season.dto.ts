@@ -9,8 +9,5 @@ export class CreateAccommodationPeakSeasonDto {
   readonly end: string;
 
   @IsOptional()
-  accommodation_id: number;
-
-  @IsOptional()
   accommodation: Accommodation
 }

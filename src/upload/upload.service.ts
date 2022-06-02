@@ -18,7 +18,7 @@ export class UploadService {
       const file_name_split = file_name.split('_');
 
       const seq = Number(file_name_split[file_name_split.length - 2]);
-      const target_id = Number(file_name_split[0])
+      let target_id = Number(file_name_split[0])
 
       const insert_data: CreateImagesDto = {
         file_name,

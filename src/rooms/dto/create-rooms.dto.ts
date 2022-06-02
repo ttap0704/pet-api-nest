@@ -50,8 +50,5 @@ export class CreateRoomsDto {
   readonly seq: number;
 
   @IsOptional()
-  accommodation_id: number;
-
-  @IsOptional()
   accommodation: Accommodation
 }
