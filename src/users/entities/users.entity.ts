@@ -102,7 +102,4 @@ export class Users {
   @OneToOne(() => Business, (business: Business) => business.id)
   @JoinColumn({ name: 'business_id' })
   business: Business
-
-  @OneToMany(() => Accommodation, (accommodation) => accommodation.id)
-  accommodation_id: Accommodation[];
 }

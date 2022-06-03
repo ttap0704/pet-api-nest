@@ -88,6 +88,12 @@ export class Rooms {
   })
   seq: number;
 
+  @Column({
+    type: 'int',
+    nullable: false
+  })
+  accommodation_id: number;
+
   @CreateDateColumn()
   created_at!: Date;
 
@@ -98,6 +104,7 @@ export class Rooms {
   deleted_at!: Date;
 
   @ManyToOne(() => Accommodation, (accommodation: Accommodation) => accommodation.id)
+  @JoinColumn({ name: 'accommodation_id' })
   accommodation: Accommodation
 }
 
