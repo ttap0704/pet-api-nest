@@ -24,7 +24,14 @@ export class AccommodationPeakSeason {
   })
   end: string;
 
-  @ManyToOne(() => Accommodation, (accommodation: Accommodation) => accommodation.id)
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
+  accommodation_id: number;
+
+  @ManyToOne(() => Accommodation, (accommodation: Accommodation) => accommodation)
+  @JoinColumn({ name: 'accommodation_id' })
   accommodation: Accommodation
 }
 

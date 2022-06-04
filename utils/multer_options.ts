@@ -27,7 +27,13 @@ export const multerOptions: MulterOptions = {
     destination: (request, file, callback) => {
       const name_splited = file.originalname.split('_');
       const type_path = UPLOAD_PATH_ENG[name_splited[0]]
-      const target_path = Math.floor(Number(name_splited[1]) / 50) * 50
+
+      let target_idx = 1;
+      if (['rooms', 'exposure_menu'].includes(name_splited[0])) {
+        target_idx = 2;
+      }
+
+      const target_path = Math.floor(Number(name_splited[target_idx]) / 50) * 50
       const upload_path = `image`;
 
       if (!existsSync(upload_path)) {

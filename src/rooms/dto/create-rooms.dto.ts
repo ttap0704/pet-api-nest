@@ -47,7 +47,7 @@ export class CreateRoomsDto {
   readonly additional_info: string;
 
   @IsNumber()
-  readonly seq: number;
+  seq: number;
 
   @IsOptional()
   accommodation: Accommodation

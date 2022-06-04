@@ -4,6 +4,7 @@ import { join } from 'path/posix';
 import { Images } from 'src/images/entities/images.entity';
 import { ImagesRepository } from 'src/images/entities/images.repository';
 import { RoomsRepository } from 'src/rooms/entities/rooms.repository';
+import { UpdateAccommodationDto } from './dto/update-accommodation.dto';
 import { Accommodation } from './entities/accommodation.entity';
 import { AccommodationRepository } from './entities/accommodation.repository';
 
@@ -49,5 +50,9 @@ export class AccommodationService {
     } catch (err) {
       throw new Error(err)
     }
+  }
+
+  public async updateAccommodation(accommodation_id: number, update_data: UpdateAccommodationDto) {
+    return await this.accommodationRepository.update({ id: accommodation_id }, { ...update_data })
   }
 }

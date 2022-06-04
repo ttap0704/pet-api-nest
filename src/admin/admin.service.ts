@@ -108,6 +108,7 @@ export class AdminService {
     const peak_season_data = data.peak_season;
     for (const season of peak_season_data) {
       season.accommodation = accommodation;
+      season.accommodation_id = accommodation.id
     }
     const seasons = await this.accommodationPeakSeasonRepository.createAccommodationPeakSeasons(peak_season_data)
 
