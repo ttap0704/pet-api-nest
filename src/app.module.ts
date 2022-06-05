@@ -13,6 +13,11 @@ import { AccommodationViewsCountModule } from './accommodation_views_count/accom
 import { RoomsModule } from './rooms/rooms.module';
 import { ImagesModule } from './images/images.module';
 import { UploadModule } from './upload/upload.module';
+import { RestaurantModule } from './restaurant/restaurant.module';
+import { RestaurantViewsCountModule } from './restaurant_views_count/restaurant_views_count.module';
+import { ExposureMenuModule } from './exposure_menu/exposure_menu.module';
+import { EntireMenuModule } from './entire_menu/entire_menu.module';
+import { EntireMenuCategoryModule } from './entire_menu_category/entire_menu_category.module';
 
 @Module({
   imports: [
@@ -28,6 +33,11 @@ import { UploadModule } from './upload/upload.module';
     RoomsModule,
     ImagesModule,
     UploadModule,
+    RestaurantModule,
+    RestaurantViewsCountModule,
+    ExposureMenuModule,
+    EntireMenuModule,
+    EntireMenuCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
