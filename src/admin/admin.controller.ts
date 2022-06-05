@@ -13,6 +13,7 @@ import { CreateAccommodationPeakSeasonDto } from 'src/accommodation_peak_season/
 import { AccommodationPeakSeasonService } from 'src/accommodation_peak_season/accommodation_peak_season.service';
 import { UpdateAccommodationDto } from 'src/accommodation/dto/update-accommodation.dto';
 import { CreateRoomsDto } from 'src/rooms/dto/create-rooms.dto';
+import { UpdateRoomsDto } from 'src/rooms/dto/update-rooms.dto';
 
 interface AccommodationList extends Accommodation {
   accommodation_images: Images[]
@@ -58,18 +59,38 @@ export class AdminController {
     return await this.roomsService.getAdminRooms(admin, page)
   }
 
+  @Post('/:admin/accommodation/:accommodation_id/delete')
+  public async deleteAccommodation(@Param('accommodation_id') accommodation_id: number) {
+    return await this.accommodationService.deleteAccommodation(accommodation_id)
+  }
+
   @Post('/:admin/accommodation/:accommodation_id/season')
   public async updateSeasons(@Param('accommodation_id') accommodation_id: number, @Body('season') season: CreateAccommodationPeakSeasonDto[]) {
     return await this.accommodationPeakSeasonService.updateSeasons(accommodation_id, season)
   }
 
-  @Post('/:admin/accommodation/:accommodation_id/service')
-  public async updateAccommodation(@Param('accommodation_id') accommodation_id: number, @Body('service_info') service_info: UpdateAccommodationDto) {
-    return await this.accommodationService.updateAccommodation(accommodation_id, service_info)
+  @Post('/:admin/accommodation/:accommodation_id/info')
+  public async updateAccommodation(@Param('accommodation_id') accommodation_id: number, @Body() update_data: UpdateAccommodationDto) {
+    return await this.accommodationService.updateAccommodation(accommodation_id, update_data)
   }
 
   @Post('/:admin/accommodation/:accommodation_id/rooms')
   public async addRooms(@Param('accommodation_id') accommodation_id: number, @Body() rooms_data: CreateRoomsDto[]) {
     return await this.roomsService.addAdminRooms(accommodation_id, rooms_data)
+  }
+
+  @Post('/:admin/accommodation/:accommodation_id/rooms/order')
+  public async updateRoomsSeq(@Body() rooms_data: UpdateRoomsDto[]) {
+    return await this.roomsService.updateRoomsSeq(rooms_data)
+  }
+
+  @Post('/:admin/accommodation/:accommodation_id/rooms/:room_id/info')
+  public async updateRooms(@Param('room_id') room_id: number, @Body() update_data: UpdateRoomsDto) {
+    return await this.roomsService.updateRooms(room_id, update_data)
+  }
+
+  @Post('/:admin/accommodation/:accommodation_id/rooms/:room_id/delete')
+  public async deleteRooms(@Param('room_id') room_id: number) {
+    return await this.roomsService.deleteRooms(room_id)
   }
 }

@@ -5,6 +5,7 @@ import { Images } from 'src/images/entities/images.entity';
 import { ImagesRepository } from 'src/images/entities/images.repository';
 import { In } from 'typeorm';
 import { CreateRoomsDto } from './dto/create-rooms.dto';
+import { UpdateRoomsDto } from './dto/update-rooms.dto';
 import { Rooms } from './entities/rooms.entity';
 import { RoomsRepository } from './entities/rooms.repository';
 
@@ -48,7 +49,7 @@ export class RoomsService {
       take: 1
     })
 
-    let last_seq = last_seq_room[0].seq;
+    let last_seq = last_seq_room[0] ? last_seq_room[0].seq : 0;
     for (const room_data of data) {
       room_data.accommodation = await this.accommodationRepository.findOne({ where: { id: accommodation_id } })
       room_data.seq = last_seq + 1
@@ -62,40 +63,51 @@ export class RoomsService {
   }
 
   public async getAdminRooms(admin: number, page: string) {
-    try {
+    const accommodation_ids = await this.accommodationRepository.find({
+      where: { admin },
+      select: ['id']
+    })
+    const target_ids = accommodation_ids.map(item => item.id)
 
-      const accommodation_ids = await this.accommodationRepository.find({
-        where: { admin },
-        select: ['id']
+    const rooms_count = await this.roomsRepository.count({ where: { accommodation_id: In(target_ids) } })
+    const rooms_list: Rooms[] = await this.roomsRepository.find({
+      where: {
+        accommodation_id: In(target_ids)
+      },
+      take: 5,
+      skip: 5 * (Number(page) - 1),
+      order: { id: 'DESC' },
+      relations: ['accommodation']
+    })
+
+    const final_rooms_list: RoomsList[] = []
+
+    for (const room of rooms_list) {
+      const rooms_images = await this.imagesRepository.find({
+        where: { target_id: room.id, category: 21 },
+        order: { seq: 'ASC' }
       })
-      const target_ids = accommodation_ids.map(item => item.id)
-
-      const rooms_count = await this.roomsRepository.count({ where: { accommodation_id: In(target_ids) } })
-      const rooms_list: Rooms[] = await this.roomsRepository.find({
-        where: {
-          accommodation_id: In(target_ids)
-        },
-        take: 5,
-        skip: 5 * (Number(page) - 1),
-        order: { id: 'DESC' },
-        relations: ['accommodation']
-      })
-
-      console.log(rooms_list)
-
-      const final_rooms_list: RoomsList[] = []
-
-      for (const room of rooms_list) {
-        const rooms_images = await this.imagesRepository.find({
-          where: { target_id: room.id, category: 21 },
-          order: { seq: 'ASC' }
-        })
-        final_rooms_list.push({ ...room, rooms_images, accommodation_label: room.accommodation.label })
-      }
-
-      return { count: rooms_count, rows: final_rooms_list };
-    } catch (err) {
-      throw new Error(err)
+      final_rooms_list.push({ ...room, rooms_images, accommodation_label: room.accommodation.label })
     }
+
+    return { count: rooms_count, rows: final_rooms_list };
+  }
+
+  public async updateRooms(id: number, update_data: UpdateRoomsDto) {
+    return this.roomsRepository.update({ id }, { ...update_data })
+  }
+
+  public async deleteRooms(id: number) {
+    return this.roomsRepository.softDelete({ id })
+  }
+
+  public async updateRoomsSeq(update_data: UpdateRoomsDto[]) {
+    let update_length = 0;
+    for (const data of update_data) {
+      const update_res = await this.roomsRepository.update({ id: data.id }, { seq: data.seq })
+      update_length += update_res.affected
+    }
+
+    return update_length == update_data.length ? true : false;
   }
 }

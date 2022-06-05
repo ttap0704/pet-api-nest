@@ -2,6 +2,10 @@ import { IsNumber, IsOptional, IsString } from "class-validator";
 import { Accommodation } from "src/accommodation/entities/accommodation.entity";
 
 export class CreateRoomsDto {
+  @IsOptional()
+  @IsNumber()
+  readonly id: number;
+
   @IsString()
   readonly label: string;
 

@@ -15,11 +15,11 @@ export const ROOMS_ENG = 'rooms';
 export const CONTENTS_CODE: {
   [prop: string]: any;
 } = {
-  restarunt: RESTAURANT,
-  exposure_menu: EXPOSURE_MENU,
-  entire_menu: ENTIRE_MENU,
-  accommodation: ACCOMMODATION,
-  rooms: ROOMS,
+  'restarunt': RESTAURANT,
+  'exposure_menu': EXPOSURE_MENU,
+  'entire_menu': ENTIRE_MENU,
+  'accommodation': ACCOMMODATION,
+  'rooms': ROOMS,
 };
 
 export const MODEL_STRING: {
