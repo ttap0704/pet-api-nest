@@ -46,12 +46,6 @@ export class ExposureMenu {
   @DeleteDateColumn()
   deleted_at!: Date;
 
-  @Column({
-    type: 'int',
-    nullable: false
-  })
-  restaurant_id: number;
-
   @ManyToOne(() => Restaurant, (restaurant: Restaurant) => restaurant)
   @JoinColumn({ name: 'restaurant_id' })
   restaurant: Restaurant

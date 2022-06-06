@@ -1,7 +1,8 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
+import { EntireMenuCategory } from "src/entire_menu_category/entities/entire_menu_category.entity";
 import { Restaurant } from "src/restaurant/entities/restaurant.entity";
 
-export class CreateExposureMenuDto {
+export class CreateEntireMenuDto {
   @IsString()
   readonly label: string;
 
@@ -16,4 +17,7 @@ export class CreateExposureMenuDto {
 
   @IsOptional()
   restaurant: Restaurant
+
+  @IsOptional()
+  entire_menu_category: EntireMenuCategory
 }

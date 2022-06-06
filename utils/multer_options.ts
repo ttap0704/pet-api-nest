@@ -26,11 +26,14 @@ export const multerOptions: MulterOptions = {
   storage: diskStorage({
     destination: (request, file, callback) => {
       const name_splited = file.originalname.split('_');
-      const type_path = UPLOAD_PATH_ENG[name_splited[0]]
+      let type_path = UPLOAD_PATH_ENG[name_splited[0]]
 
       let target_idx = 1;
-      if (['rooms', 'exposure_menu'].includes(name_splited[0])) {
+      if (['rooms'].includes(name_splited[0])) {
         target_idx = 2;
+      } else if (file.originalname.includes('exposure_menu')) {
+        target_idx = 3;
+        type_path = '/exposure_menu/'
       }
 
       const target_path = Math.floor(Number(name_splited[target_idx]) / 50) * 50
@@ -52,8 +55,10 @@ export const multerOptions: MulterOptions = {
       let file_name = '';
       if (['accommodation', 'restaurant'].includes(name_splited[0])) {
         file_name = name_splited.slice(1).join('_')
-      } else {
+      } else if (['rooms'].includes(name_splited[0])) {
         file_name = name_splited.slice(2).join('_')
+      } else {
+        file_name = name_splited.slice(3).join('_')
       }
       callback(null, `${file_name}`);
     },

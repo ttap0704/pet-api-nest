@@ -4,6 +4,7 @@ import { CreateAdminDto } from './dto/create-admin.dto';
 import { AdminService } from './admin.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateAdminAccommodationDto } from './dto/create-admin_accommodation.dto';
+import { CreateAdminRestaurantDto } from './dto/create-admin_restaurant.dto';
 import { AccommodationService } from 'src/accommodation/accommodation.service';
 import { Accommodation } from 'src/accommodation/entities/accommodation.entity';
 import { Images } from 'src/images/entities/images.entity';
@@ -44,6 +45,7 @@ export class AdminController {
     return await this.adminService.joinAdmin(data)
   }
 
+  // ========================== 숙박업소 관리자 시작
   @Post('/:admin/accommodation')
   public async createAccommodation(@Param('admin') admin: number, @Body() data: CreateAdminAccommodationDto) {
     return await this.adminService.createAccommodation(admin, data);
@@ -93,4 +95,13 @@ export class AdminController {
   public async deleteRooms(@Param('room_id') room_id: number) {
     return await this.roomsService.deleteRooms(room_id)
   }
+
+  // ========================== 숙박업소 관리자 끝
+
+  // ========================== 음식점 관리자 시작
+  @Post('/:admin/restaurant')
+  public async createRestaurant(@Param('admin') admin: number, @Body() data: CreateAdminRestaurantDto) {
+    return await this.adminService.createRestaurant(admin, data);
+  }
+  // ========================== 음식점 관리자 끝
 }

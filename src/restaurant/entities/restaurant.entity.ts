@@ -137,7 +137,7 @@ export class Restaurant {
   @DeleteDateColumn()
   deleted_at!: Date;
 
-  @ManyToOne(() => Users, (admin: Users) => admin.id)
+  @ManyToOne(() => Users, (admin: Users) => admin)
   @JoinColumn({ name: 'admin_id' })
   admin: Users
 }

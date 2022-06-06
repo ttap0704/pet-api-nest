@@ -1,15 +1,9 @@
 import { IsNumber, IsOptional, IsString } from "class-validator";
 import { Restaurant } from "src/restaurant/entities/restaurant.entity";
 
-export class CreateExposureMenuDto {
+export class CreateEntireMenuCategoryDto {
   @IsString()
-  readonly label: string;
-
-  @IsNumber()
-  readonly price: number;
-
-  @IsString()
-  readonly comment: string;
+  readonly category: string;
 
   @IsNumber()
   seq: number;

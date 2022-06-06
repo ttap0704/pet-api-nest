@@ -8,12 +8,16 @@ import { JoinCertificationRepository } from 'src/join_certification/entities/joi
 import { generateRandom } from 'utils/tools';
 import { getCertificationContents, sendEmail } from 'utils/email_tools';
 import { CreateAdminAccommodationDto } from './dto/create-admin_accommodation.dto';
-import { AccommodationService } from 'src/accommodation/accommodation.service';
-import { RoomsService } from 'src/rooms/rooms.service';
-import { AccommodationPeakSeasonService } from 'src/accommodation_peak_season/accommodation_peak_season.service';
+import { CreateAdminRestaurantDto } from './dto/create-admin_restaurant.dto';
 import { AccommodationRepository } from 'src/accommodation/entities/accommodation.repository';
 import { AccommodationPeakSeasonRepository } from 'src/accommodation_peak_season/entities/accommodation_peak_season.repository';
 import { RoomsRepository } from 'src/rooms/entities/rooms.repository';
+import { RestaurantRepository } from 'src/restaurant/entities/restaurant.repository';
+import { EntireMenuRepository } from 'src/entire_menu/entities/entire_menu.repository';
+import { EntireMenuCategoryRepository } from 'src/entire_menu_category/entities/entire_menu_category.repository';
+import { ExposureMenuRepository } from 'src/exposure_menu/entities/exposure_menu.repository';
+import { ExposureMenu } from 'src/exposure_menu/entities/exposure_menu.entity';
+import { CreateEntireMenuCategoryDto } from 'src/entire_menu_category/dto/create-entire_menu_category.dto';
 
 @Injectable()
 export class AdminService {
@@ -36,6 +40,18 @@ export class AdminService {
 
     @InjectRepository(RoomsRepository)
     private roomsRepository: RoomsRepository,
+
+    @InjectRepository(RestaurantRepository)
+    private restaurantRepository: RestaurantRepository,
+
+    @InjectRepository(EntireMenuRepository)
+    private entireMenuRepository: EntireMenuRepository,
+
+    @InjectRepository(EntireMenuCategoryRepository)
+    private entireMenuCategoryRepository: EntireMenuCategoryRepository,
+
+    @InjectRepository(ExposureMenuRepository)
+    private exposureMenuRepository: ExposureMenuRepository,
   ) { }
 
   public async joinAdmin(data: CreateAdminDto) {
@@ -97,7 +113,7 @@ export class AdminService {
     const accommodation_data = data.accommodation;
     accommodation_data.admin_id = admin_id;
     accommodation_data.admin = admin;
-    const accommodation = await this.accommodationRepository.createAccommodation(accommodation_data);
+    const accommodation = await this.accommodationRepository.save(accommodation_data);
 
     const rooms_data = data.rooms;
     for (const room of rooms_data) {
@@ -113,5 +129,43 @@ export class AdminService {
     const seasons = await this.accommodationPeakSeasonRepository.createAccommodationPeakSeasons(peak_season_data)
 
     return { ...accommodation, rooms };
+  }
+
+  public async createRestaurant(admin_id, data: CreateAdminRestaurantDto) {
+    const admin = await this.usersRepository.findOne({ id: admin_id });
+
+    const restaurant_data = data.restaurant;
+    restaurant_data.admin = admin;
+    const restaurant = await this.restaurantRepository.save(restaurant_data);
+
+    const exposure_menu_data = data.exposure_menu;
+    const exposure_menu_arr: ExposureMenu[] = []
+    for (const exposure_menu of exposure_menu_data) {
+      exposure_menu.restaurant = restaurant;
+
+      const exposure_menu_res = await this.exposureMenuRepository.save(exposure_menu);
+
+      exposure_menu_arr.push(exposure_menu_res)
+    }
+
+    const entire_menu_data = data.entire_menu;
+    for (const entire_menu of entire_menu_data) {
+      const category_data: CreateEntireMenuCategoryDto = {
+        category: entire_menu.category,
+        seq: entire_menu.seq,
+        restaurant
+      }
+
+      const category = await this.entireMenuCategoryRepository.save(category_data);
+
+      for (const menu of entire_menu.menu) {
+        menu.entire_menu_category = category
+        menu.restaurant = restaurant;
+
+        const entire_menu_res = await this.entireMenuRepository.save(menu);
+      }
+    }
+
+    return { ...restaurant, exposure_menu: exposure_menu_arr };
   }
 }
