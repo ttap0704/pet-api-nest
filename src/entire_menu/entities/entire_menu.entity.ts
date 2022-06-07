@@ -34,13 +34,13 @@ export class EntireMenu {
     type: 'int',
     nullable: false
   })
-  restaurant_id: number;
+  category_id: number;
 
   @Column({
     type: 'int',
     nullable: false
   })
-  category_id: number;
+  restaurant_id: number;
 
   @CreateDateColumn()
   created_at!: Date;

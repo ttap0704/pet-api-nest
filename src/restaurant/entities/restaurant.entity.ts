@@ -1,3 +1,6 @@
+import { EntireMenu } from 'src/entire_menu/entities/entire_menu.entity';
+import { EntireMenuCategory } from 'src/entire_menu_category/entities/entire_menu_category.entity';
+import { ExposureMenu } from 'src/exposure_menu/entities/exposure_menu.entity';
 import { Users } from 'src/users/entities/users.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
@@ -136,6 +139,12 @@ export class Restaurant {
 
   @DeleteDateColumn()
   deleted_at!: Date;
+
+  @OneToMany(() => EntireMenuCategory, (entire_menu_category) => entire_menu_category.restaurant)
+  entire_menu_category: EntireMenuCategory[];
+
+  @OneToMany(() => ExposureMenu, (exposure_menu) => exposure_menu.restaurant)
+  exposure_menu: ExposureMenu[];
 
   @ManyToOne(() => Users, (admin: Users) => admin)
   @JoinColumn({ name: 'admin_id' })

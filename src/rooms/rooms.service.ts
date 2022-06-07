@@ -101,7 +101,7 @@ export class RoomsService {
     return this.roomsRepository.softDelete({ id })
   }
 
-  public async updateRoomsSeq(update_data: UpdateRoomsDto[]) {
+  public async updateRoomsOrder(update_data: UpdateRoomsDto[]) {
     let update_length = 0;
     for (const data of update_data) {
       const update_res = await this.roomsRepository.update({ id: data.id }, { seq: data.seq })

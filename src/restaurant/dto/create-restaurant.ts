@@ -1,6 +1,4 @@
 import { IsNumber, IsOptional, IsString, Length } from "class-validator";
-import { AccommodationPeakSeason } from "src/accommodation_peak_season/entities/accommodation_peak_season.entity";
-import { Rooms } from "src/rooms/entities/rooms.entity";
 import { Users } from "src/users/entities/users.entity";
 
 export class CreateRestaurantDto {
@@ -70,10 +68,4 @@ export class CreateRestaurantDto {
 
   @IsOptional()
   admin: Users
-
-  @IsOptional()
-  accommodation_rooms: Rooms[]
-
-  @IsOptional()
-  accommodation_peak_season: AccommodationPeakSeason[]
 }

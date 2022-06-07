@@ -16,6 +16,10 @@ import { RoomsService } from 'src/rooms/rooms.service';
 import { UsersRepository } from 'src/users/entities/users.repository';
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
+import { RestaurantService } from 'src/restaurant/restaurant.service';
+import { EntireMenuService } from 'src/entire_menu/entire_menu.service';
+import { EntireMenuCategoryService } from 'src/entire_menu_category/entire_menu_category.service';
+import { ExposureMenuService } from 'src/exposure_menu/exposure_menu.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([
@@ -32,6 +36,15 @@ import { AdminService } from './admin.service';
     ExposureMenuRepository
   ])],
   controllers: [AdminController],
-  providers: [AdminService, AccommodationService, RoomsService, AccommodationPeakSeasonService]
+  providers: [
+    AdminService,
+    AccommodationService,
+    RoomsService,
+    AccommodationPeakSeasonService,
+    RestaurantService,
+    EntireMenuService,
+    EntireMenuCategoryService,
+    ExposureMenuService
+  ]
 })
 export class AdminModule { }

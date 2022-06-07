@@ -3,6 +3,10 @@ import { EntireMenuCategory } from "src/entire_menu_category/entities/entire_men
 import { Restaurant } from "src/restaurant/entities/restaurant.entity";
 
 export class CreateEntireMenuDto {
+  @IsOptional()
+  @IsNumber()
+  readonly id: number;
+
   @IsString()
   readonly label: string;
 

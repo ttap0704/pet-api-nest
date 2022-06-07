@@ -11,6 +11,7 @@ export class ImagesService {
   ) { }
 
   public async deleteImages(type: string, target_id: number) {
+    console.log(CONTENTS_CODE[type], type)
     return await this.imagesRepository.delete({ category: CONTENTS_CODE[type], target_id })
   }
 }

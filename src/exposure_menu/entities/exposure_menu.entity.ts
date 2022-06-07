@@ -37,6 +37,12 @@ export class ExposureMenu {
   })
   seq: number;
 
+  @Column({
+    type: 'int',
+    nullable: false
+  })
+  restaurant_id: number;
+
   @CreateDateColumn()
   created_at!: Date;
 
