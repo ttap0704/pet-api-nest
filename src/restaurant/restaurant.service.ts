@@ -156,4 +156,8 @@ export class RestaurantService {
   public async updateRestaurant(restaurant_id: number, update_data: UpdateRestaurantDto) {
     return await this.restaurantRepository.update({ id: restaurant_id }, { ...update_data })
   }
+
+  public async deleteRestaurant(restaurant_id: number) {
+    return await this.restaurantRepository.softDelete({ id: restaurant_id })
+  }
 }

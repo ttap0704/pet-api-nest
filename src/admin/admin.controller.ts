@@ -23,7 +23,10 @@ import { EntireMenuService } from 'src/entire_menu/entire_menu.service';
 import { EntireMenuCategoryService } from 'src/entire_menu_category/entire_menu_category.service';
 import { ExposureMenuService } from 'src/exposure_menu/exposure_menu.service';
 import { UpdateEntireMenuCategoryDto } from 'src/entire_menu_category/dto/update-entire_menu_category.dto';
-import { UpdateExposureMenuyDto } from 'src/exposure_menu/dto/update-exposure_menu.dto';
+import { UpdateExposureMenuDto } from 'src/exposure_menu/dto/update-exposure_menu.dto';
+import { CreateExposureMenuDto } from 'src/exposure_menu/dto/create-exposure_menu.dto';
+import { AddEntireMenuCategoryDto } from 'src/entire_menu_category/dto/add-entire_menu_category.dto';
+import { ExposureMenu } from 'src/exposure_menu/entities/exposure_menu.entity';
 
 interface AccommodationList extends Accommodation {
   accommodation_images: Images[]
@@ -129,12 +132,37 @@ export class AdminController {
     return await this.restaurantService.getAdminRestaurant(admin, page)
   }
 
+  @Get('/:admin/restaurant/exposure_menu')
+  public async getAdminExposureMenu(@Param('admin') admin: number, @Query('page') page: string): Promise<{ count: number, rows: ExposureMenu[] }> {
+    return await this.exposureMenuService.getAdminExposureMenu(admin, page)
+  }
+
+  @Post('/:admin/restaurant/:restaurant_id/delete')
+  public async deleteRestaurant(@Param('restaurant_id') restaurant_id: number) {
+    return await this.restaurantService.deleteRestaurant(restaurant_id);
+  }
+
   @Post('/:admin/restaurant/:restaurant_id/info')
   public async updateRestaurant(@Param('restaurant_id') restaurant_id: number, @Body() update_data: UpdateRestaurantDto) {
     return await this.restaurantService.updateRestaurant(restaurant_id, update_data)
   }
 
-  @Post('/:admin/restaurant/:restaurant_id/entire_menu/order')
+  // @Post('/:admin/restaurant/:restaurant_id/entire_menu/order')
+  // public async updateEntireMenuOrder(@Body() menu_data: UpdateEntireMenuDto[]) {
+  //   return await this.entireMenuService.updateEntireMenuOrder(menu_data)
+  // }
+
+  @Post('/:admin/restaurant/:restaurant_id/category')
+  public async addEntireMenuCategory(@Param('restaurant_id') restaurant_id: number, @Body() menu_data: AddEntireMenuCategoryDto[]) {
+    return await this.entireMenuCategoryService.addEntireMenuCategory(restaurant_id, menu_data)
+  }
+
+  @Post('/:admin/restaurant/:restaurant_id/exposure_menu')
+  public async addExposureMenu(@Param('restaurant_id') restaurant_id: number, @Body() menu_data: CreateExposureMenuDto[]) {
+    return await this.exposureMenuService.addExposureMenu(restaurant_id, menu_data)
+  }
+
+  @Post('/:admin/restaurant/:restaurant_id/exposure_mem/order')
   public async updateEntireMenuOrder(@Body() menu_data: UpdateEntireMenuDto[]) {
     return await this.entireMenuService.updateEntireMenuOrder(menu_data)
   }
@@ -144,9 +172,17 @@ export class AdminController {
     return await this.entireMenuCategoryService.updateEntireMenuCategoryOrder(menu_data)
   }
 
+  @Post('/:admin/restaurant/:restaurant_id/exposure_menu/:exposure_menu_id/info')
+  public async updateExposureMenu(@Param('exposure_menu_id') exposure_menu_id: number, @Body() update_data: UpdateExposureMenuDto) {
+    console.log('여기 아니여?')
+    return await this.exposureMenuService.updateExposureMenu(exposure_menu_id, update_data)
+  }
+
   @Post('/:admin/restaurant/:restaurant_id/exposure_menu/order')
-  public async updateExposureMenuOrder(@Body() menu_data: UpdateExposureMenuyDto[]) {
+  public async updateExposureMenuOrder(@Body() menu_data: UpdateExposureMenuDto[]) {
     return await this.exposureMenuService.updateExposureMenuOrder(menu_data)
   }
+
+
   // ========================== 음식점 관리자 끝
 }
