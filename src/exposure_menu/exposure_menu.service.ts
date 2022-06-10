@@ -7,6 +7,7 @@ import { RestaurantRepository } from 'src/restaurant/entities/restaurant.reposit
 import { In } from 'typeorm';
 import { CreateExposureMenuDto } from './dto/create-exposure_menu.dto';
 import { UpdateExposureMenuDto } from './dto/update-exposure_menu.dto';
+import { UpdateExposureMenuOrderDto } from './dto/update-exposure_menu_order.dto';
 import { ExposureMenu } from './entities/exposure_menu.entity';
 import { ExposureMenuRepository } from './entities/exposure_menu.repository';
 
@@ -83,7 +84,7 @@ export class ExposureMenuService {
     return exposure_menu;
   }
 
-  public async updateExposureMenuOrder(update_data: UpdateExposureMenuDto[]) {
+  public async updateExposureMenuOrder(update_data: UpdateExposureMenuOrderDto[]) {
     let update_length = 0;
     for (const data of update_data) {
       const update_res = await this.exposureMenuRepository.update({ id: data.id }, { seq: data.seq })
@@ -94,7 +95,10 @@ export class ExposureMenuService {
   }
 
   public async updateExposureMenu(exposure_menu_id: number, update_data: UpdateExposureMenuDto) {
-    console.log(typeof exposure_menu_id)
     return await this.exposureMenuRepository.update({ id: exposure_menu_id }, { ...update_data })
+  }
+
+  public async deleteExposureMenu(exposure_menu_id: number) {
+    return await this.exposureMenuRepository.softDelete({ id: exposure_menu_id })
   }
 }

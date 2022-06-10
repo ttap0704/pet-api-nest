@@ -13,9 +13,6 @@ export class CreateEntireMenuDto {
   @IsNumber()
   readonly price: number;
 
-  @IsString()
-  readonly comment: string;
-
   @IsNumber()
   seq: number;
 
@@ -23,5 +20,5 @@ export class CreateEntireMenuDto {
   restaurant: Restaurant
 
   @IsOptional()
-  entire_menu_category: EntireMenuCategory
+  category: EntireMenuCategory
 }

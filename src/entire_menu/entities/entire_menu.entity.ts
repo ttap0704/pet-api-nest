@@ -57,7 +57,7 @@ export class EntireMenu {
 
   @ManyToOne(() => EntireMenuCategory, (entire_menu_category: EntireMenuCategory) => entire_menu_category)
   @JoinColumn({ name: 'category_id' })
-  entire_menu_category: EntireMenuCategory
+  category: EntireMenuCategory
 }
 
 

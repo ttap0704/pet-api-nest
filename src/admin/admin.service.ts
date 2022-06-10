@@ -159,7 +159,7 @@ export class AdminService {
       const category = await this.entireMenuCategoryRepository.save(category_data);
 
       for (const menu of entire_menu.menu) {
-        menu.entire_menu_category = category
+        menu.category = category
         menu.restaurant = restaurant;
 
         const entire_menu_res = await this.entireMenuRepository.save(menu);

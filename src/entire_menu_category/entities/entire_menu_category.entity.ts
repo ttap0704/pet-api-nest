@@ -1,6 +1,6 @@
 import { EntireMenu } from 'src/entire_menu/entities/entire_menu.entity';
 import { Restaurant } from 'src/restaurant/entities/restaurant.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class EntireMenuCategory {
@@ -30,8 +30,17 @@ export class EntireMenuCategory {
   })
   restaurant_id: number;
 
+  @CreateDateColumn()
+  created_at!: Date;
+
+  @UpdateDateColumn()
+  updated_at!: Date;
+
+  @DeleteDateColumn()
+  deleted_at!: Date;
+
   @OneToMany(() => EntireMenu, (entrie_menu: EntireMenu) => entrie_menu)
-  entire_menu: EntireMenu
+  menu: EntireMenu[]
 
   @ManyToOne(() => Restaurant, (restaurant: Restaurant) => restaurant)
   @JoinColumn({ name: 'restaurant_id' })
