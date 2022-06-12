@@ -16,13 +16,19 @@ export class AccommodationViewsCount {
     unsigned: true,
     nullable: false,
   })
-  views: string;
+  views: number;
 
   @Column({
     type: 'date',
     nullable: false,
   })
   postdate: string;
+
+  @Column({
+    type: 'int',
+    nullable: false
+  })
+  accommodation_id: number;
 
   @ManyToOne(() => Accommodation, (accommodation: Accommodation) => accommodation)
   @JoinColumn({ name: 'accommodation_id' })

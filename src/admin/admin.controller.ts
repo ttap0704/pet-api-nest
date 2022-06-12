@@ -74,10 +74,22 @@ export class AdminController {
     return 'hihi'
   }
 
+  // ========================== 관리자 공통 시작
   @Post('/join')
   public async joinAdmin(@Body() data: CreateAdminDto) {
     return await this.adminService.joinAdmin(data)
   }
+
+  @Get('/:admin/product')
+  public async getAdminProduct(@Param('admin') admin: number) {
+    return await this.adminService.getAdminProduct(admin);
+  }
+
+  @Get('/:admin/:type/:id/views')
+  public async getViewsCount(@Param('admin') admin: number, @Param('type') type: string, @Param('id') id: number, @Query('year') year: string, @Query('month') month: string) {
+    return await this.adminService.getViewsCount(admin, type, id, year, month);
+  }
+  // ========================== 관리자 공통 끝
 
   // ========================== 숙박업소 관리자 시작
   @Post('/:admin/accommodation')

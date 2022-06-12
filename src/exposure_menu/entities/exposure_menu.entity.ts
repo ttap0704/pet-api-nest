@@ -1,4 +1,5 @@
 import { EntireMenu } from 'src/entire_menu/entities/entire_menu.entity';
+import { Images } from 'src/images/entities/images.entity';
 import { Restaurant } from 'src/restaurant/entities/restaurant.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
@@ -55,4 +56,6 @@ export class ExposureMenu {
   @ManyToOne(() => Restaurant, (restaurant: Restaurant) => restaurant)
   @JoinColumn({ name: 'restaurant_id' })
   restaurant: Restaurant
+
+  exposure_menu_image: Images
 }

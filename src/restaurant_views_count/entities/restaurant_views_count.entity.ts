@@ -15,7 +15,7 @@ export class RestaurantViewsCount {
     unsigned: true,
     nullable: false,
   })
-  views: string;
+  views: number;
 
   @Column({
     type: 'date',
@@ -23,8 +23,14 @@ export class RestaurantViewsCount {
   })
   postdate: string;
 
-  @ManyToOne(() => Restaurant, (Restaurant: Restaurant) => Restaurant)
+  @Column({
+    type: 'int',
+    nullable: false
+  })
+  restaurant_id: number
+
+  @ManyToOne(() => Restaurant, (restaurant: Restaurant) => restaurant)
   @JoinColumn({ name: 'restaurant_id' })
-  Restaurant: Restaurant
+  restaurant: Restaurant
 }
 

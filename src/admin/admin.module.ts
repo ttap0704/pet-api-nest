@@ -20,6 +20,8 @@ import { RestaurantService } from 'src/restaurant/restaurant.service';
 import { EntireMenuService } from 'src/entire_menu/entire_menu.service';
 import { EntireMenuCategoryService } from 'src/entire_menu_category/entire_menu_category.service';
 import { ExposureMenuService } from 'src/exposure_menu/exposure_menu.service';
+import { AccommodationViewsCountRepository } from 'src/accommodation_views_count/entities/accommodation_views_count.repository';
+import { RestaurantViewsCountRepository } from 'src/restaurant_views_count/entities/restaurant_views_count.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([
@@ -33,7 +35,9 @@ import { ExposureMenuService } from 'src/exposure_menu/exposure_menu.service';
     RestaurantRepository,
     EntireMenuRepository,
     EntireMenuCategoryRepository,
-    ExposureMenuRepository
+    ExposureMenuRepository,
+    AccommodationViewsCountRepository,
+    RestaurantViewsCountRepository
   ])],
   controllers: [AdminController],
   providers: [
@@ -44,7 +48,7 @@ import { ExposureMenuService } from 'src/exposure_menu/exposure_menu.service';
     RestaurantService,
     EntireMenuService,
     EntireMenuCategoryService,
-    ExposureMenuService
+    ExposureMenuService,
   ]
 })
 export class AdminModule { }

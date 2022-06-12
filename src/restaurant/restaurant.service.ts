@@ -1,14 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntireMenuRepository } from 'src/entire_menu/entities/entire_menu.repository';
+import { EntireMenuCategory } from 'src/entire_menu_category/entities/entire_menu_category.entity';
 import { EntireMenuCategoryRepository } from 'src/entire_menu_category/entities/entire_menu_category.repository';
+import { ExposureMenu } from 'src/exposure_menu/entities/exposure_menu.entity';
 import { ExposureMenuRepository } from 'src/exposure_menu/entities/exposure_menu.repository';
 import { Images } from 'src/images/entities/images.entity';
 import { ImagesRepository } from 'src/images/entities/images.repository';
+import { RestaurantViewsCountRepository } from 'src/restaurant_views_count/entities/restaurant_views_count.repository';
 import { In, Like } from 'typeorm';
 import { UpdateRestaurantDto } from './dto/update-restaurant';
 import { Restaurant } from './entities/restaurant.entity';
 import { RestaurantRepository } from './entities/restaurant.repository';
+
+interface ExposureMenuList extends ExposureMenu {
+  exposure_menu_image: Images
+}
 
 interface RestaurantList extends Restaurant {
   restaurant_images: Images[];
@@ -31,6 +38,9 @@ export class RestaurantService {
 
     @InjectRepository(ExposureMenuRepository)
     private exposureMenuRepository: ExposureMenuRepository,
+
+    @InjectRepository(RestaurantViewsCountRepository)
+    private restaurantViewsCountRepository: RestaurantViewsCountRepository
   ) { }
 
   public async getRestaurantList(types: string, location: string) {
@@ -69,7 +79,7 @@ export class RestaurantService {
       const restaurant_images = await this.imagesRepository.find({
         where: {
           target_id: restaurant.id,
-          category: 2,
+          category: 1,
         },
         order: { seq: 'ASC' },
         take: 1
@@ -81,38 +91,83 @@ export class RestaurantService {
   }
 
   public async getRestaurantDetail(id: number) {
-    // const restaurant: Restaurant = await this.restaurantRepository.findOne({
-    //   where: { id },
-    //   relations: ['restaurant_peak_season']
-    // })
+    const restaurant: Restaurant = await this.restaurantRepository.findOne({
+      where: { id },
+      relations: []
+    })
 
 
-    // const final_restaurant: RestaurantList = { ...restaurant, restaurant_images: [] }
+    const final_restaurant: RestaurantList = { ...restaurant, restaurant_images: [] }
 
-    // const restaurant_images = await this.imagesRepository.find({
-    //   where: { target_id: restaurant.id, category: 2 },
-    //   order: { seq: 'ASC' },
-    //   take: 1
-    // })
+    const restaurant_images = await this.imagesRepository.find({
+      where: { target_id: restaurant.id, category: 1 },
+      order: { seq: 'ASC' },
+    })
 
-    // const restaurant_rooms: RoomsList[] = await this.roomsRepository.find({
-    //   where: { restaurant_id: restaurant.id },
-    //   order: { seq: 'ASC' }
-    // })
+    const exposure_menu: ExposureMenu[] = await this.exposureMenuRepository.find({
+      where: { restaurant_id: restaurant.id },
+      order: { seq: 'ASC' }
+    })
 
-    // for (const room of restaurant_rooms) {
-    //   const rooms_images = await this.imagesRepository.find({
-    //     where: { target_id: room.id, category: 21 },
-    //     order: { seq: 'ASC' }
-    //   })
-    //   room.rooms_images = rooms_images;
-    // }
+    for (const menu of exposure_menu) {
+      const exposure_menu_image = await this.imagesRepository.findOne({
+        where: { target_id: menu.id, category: 11 },
+        order: { seq: 'ASC' }
+      })
+      menu.exposure_menu_image = exposure_menu_image;
+    }
 
-    // final_restaurant.restaurant_rooms = restaurant_rooms;
-    // final_restaurant.restaurant_images = restaurant_images;
+    const entire_menu: EntireMenuCategory[] = await this.entireMenuCategoryRepository.find({
+      where: { restaurant_id: restaurant.id },
+      order: { seq: 'ASC' }
+    })
+
+    for (const menu of entire_menu) {
+      menu.menu = await this.entireMenuRepository.find({
+        where: {
+          category_id: menu.id
+        },
+        order: { seq: 'ASC' }
+      })
+    }
 
 
-    // return final_restaurant
+
+    final_restaurant.exposure_menu = exposure_menu;
+    final_restaurant.restaurant_images = restaurant_images;
+    final_restaurant.entire_menu_category = entire_menu
+
+
+    return final_restaurant
+  }
+
+  public async setRestaurantViewsCount(restaurant_id: number) {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`;
+    const date = new Date().getDate() < 10 ? `0${new Date().getDate()}` : `${new Date().getDate()}`;
+    const check = await this.restaurantViewsCountRepository.findOne({
+      where: {
+        restaurant_id,
+        postdate: `${year}-${month}-${date}`
+      }
+    })
+
+    if (!check) {
+      const restaurant = await this.restaurantRepository.findOne({ where: { id: restaurant_id } })
+      const insert_data = {
+        restaurant,
+        postdate: `${year}-${month}-${date}`,
+        views: 1
+      }
+      await this.restaurantViewsCountRepository.save(insert_data)
+    } else {
+      const update_data = {
+        views: check.views + 1
+      }
+      await this.restaurantViewsCountRepository.update({ id: check.id }, { ...update_data })
+    }
+
+    return true
   }
 
   public async getAdminRestaurant(admin: number, page: string) {

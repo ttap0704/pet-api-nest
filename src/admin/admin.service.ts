@@ -18,6 +18,9 @@ import { EntireMenuCategoryRepository } from 'src/entire_menu_category/entities/
 import { ExposureMenuRepository } from 'src/exposure_menu/entities/exposure_menu.repository';
 import { ExposureMenu } from 'src/exposure_menu/entities/exposure_menu.entity';
 import { CreateEntireMenuCategoryDto } from 'src/entire_menu_category/dto/create-entire_menu_category.dto';
+import { AccommodationViewsCountRepository } from 'src/accommodation_views_count/entities/accommodation_views_count.repository';
+import { RestaurantViewsCountRepository } from 'src/restaurant_views_count/entities/restaurant_views_count.repository';
+import { Like } from 'typeorm';
 
 @Injectable()
 export class AdminService {
@@ -52,6 +55,12 @@ export class AdminService {
 
     @InjectRepository(ExposureMenuRepository)
     private exposureMenuRepository: ExposureMenuRepository,
+
+    @InjectRepository(AccommodationViewsCountRepository)
+    private accommodationViewsCountRepository: AccommodationViewsCountRepository,
+
+    @InjectRepository(RestaurantViewsCountRepository)
+    private restaurantViewsCountRepository: RestaurantViewsCountRepository
   ) { }
 
   public async joinAdmin(data: CreateAdminDto) {
@@ -94,7 +103,7 @@ export class AdminService {
           to_name: join_data.name,
           to: join_data.login_id,
           subject: '[어디어디] 회원가입 이메일 인증',
-          message: getCertificationContents(random_num, `http://localhost:3001/manage/join/certification/${cert_res.id}`)
+          message: getCertificationContents(random_num, `http://localhost:3001/admin/join/certification/${cert_res.id}`)
         }
         await sendEmail(email_data)
 
@@ -167,5 +176,77 @@ export class AdminService {
     }
 
     return { ...restaurant, exposure_menu: exposure_menu_arr };
+  }
+
+  public async getAdminProduct(admin: number) {
+    const restaruants = await this.restaurantRepository.find({ where: { admin } });
+    const accommodations = await this.accommodationRepository.find({ where: { admin } })
+
+    const list: string[] = [];
+    if (restaruants) {
+      for (const restaurant of restaruants) {
+        list.push(`restaurant::${restaurant.id}::${restaurant.label}`)
+      }
+    }
+
+    if (accommodations) {
+      for (const accommodation of accommodations) {
+        list.push(`accommodation::${accommodation.id}::${accommodation.label}`)
+      }
+    }
+
+    return list;
+  }
+
+  public async getViewsCount(admin_id: number, type: string, id: number, year: string, month: string) {
+    const admin = await this.usersRepository.findOne({ where: { id: admin_id } })
+    const last_date = new Date(new Date(new Date(new Date().setDate(1)).setMonth(new Date().getMonth() + 1)).setDate(0)).getDate();
+
+    const count_res: { [key: string]: string | number }[] = []
+    for (let i = 1; i <= last_date; i++) {
+      const date = i < 10 ? `0${i}` : i;
+      count_res.push({ name: `${year}-${month}-${date}` })
+    }
+    if (type == 'restaurant') {
+      const restaurant = await this.restaurantRepository.findOne({ where: { admin, id } })
+
+      const counts = await this.restaurantViewsCountRepository.find({
+        where: {
+          restaurant_id: restaurant.id,
+          postdate: Like(`%${year}-${month}%`)
+        }
+      })
+
+      for (let i = 1; i <= last_date; i++) {
+        const date = i < 10 ? `0${i}` : i;
+        const cur_row = counts.find(item => item.postdate == `${year}-${month}-${date}`);
+        if (cur_row) {
+          count_res[i - 1][restaurant.label] = cur_row.views
+        } else {
+          count_res[i - 1][restaurant.label] = 0
+        }
+      }
+    } else {
+      const accommodation = await this.accommodationRepository.findOne({ where: { admin, id } })
+
+      const counts = await this.accommodationViewsCountRepository.find({
+        where: {
+          accommodation_id: accommodation.id,
+          postdate: Like(`%${year}-${month}%`)
+        }
+      })
+
+      for (let i = 1; i <= last_date; i++) {
+        const date = i < 10 ? `0${i}` : i;
+        const cur_row = counts.find(item => item.postdate == `${year}-${month}-${date}`);
+        if (cur_row) {
+          count_res[i - 1][accommodation.label] = cur_row.views
+        } else {
+          count_res[i - 1][accommodation.label] = 0
+        }
+      }
+    }
+
+    return count_res;
   }
 }

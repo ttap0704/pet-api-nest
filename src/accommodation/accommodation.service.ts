@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { join } from 'path/posix';
+import { AccommodationViewsCountRepository } from 'src/accommodation_views_count/entities/accommodation_views_count.repository';
 import { Images } from 'src/images/entities/images.entity';
 import { ImagesRepository } from 'src/images/entities/images.repository';
 import { Rooms } from 'src/rooms/entities/rooms.entity';
@@ -29,7 +30,10 @@ export class AccommodationService {
     private roomsRepository: RoomsRepository,
 
     @InjectRepository(ImagesRepository)
-    private imagesRepository: ImagesRepository
+    private imagesRepository: ImagesRepository,
+
+    @InjectRepository(AccommodationViewsCountRepository)
+    private accommodationViewsCountRepository: AccommodationViewsCountRepository
   ) { }
 
   public async getAccommodationList(types: string, location: string) {
@@ -90,8 +94,7 @@ export class AccommodationService {
 
     const accommodation_images = await this.imagesRepository.find({
       where: { target_id: accommodation.id, category: 2 },
-      order: { seq: 'ASC' },
-      take: 1
+      order: { seq: 'ASC' }
     })
 
     const accommodation_rooms: RoomsList[] = await this.roomsRepository.find({
@@ -112,6 +115,35 @@ export class AccommodationService {
 
 
     return final_accommodation
+  }
+
+  public async setAccommodationViewsCount(accommodation_id: number) {
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : `${new Date().getMonth() + 1}`;
+    const date = new Date().getDate() < 10 ? `0${new Date().getDate()}` : `${new Date().getDate()}`;
+    const check = await this.accommodationViewsCountRepository.findOne({
+      where: {
+        accommodation_id,
+        postdate: `${year}-${month}-${date}`
+      }
+    })
+
+    if (!check) {
+      const accommodation = await this.accommodationRepository.findOne({ where: { id: accommodation_id } })
+      const insert_data = {
+        accommodation,
+        postdate: `${year}-${month}-${date}`,
+        views: 1
+      }
+      await this.accommodationViewsCountRepository.save(insert_data)
+    } else {
+      const update_data = {
+        views: check.views + 1
+      }
+      await this.accommodationViewsCountRepository.update({ id: check.id }, { ...update_data })
+    }
+
+    return true
   }
 
   public async getAdminAccommodation(admin: number, page: string) {
