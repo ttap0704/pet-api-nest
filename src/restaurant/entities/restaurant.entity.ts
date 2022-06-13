@@ -131,6 +131,19 @@ export class Restaurant {
   })
   introduction: string;
 
+  @Column({
+    type: 'smallint',
+    nullable: false,
+    default: 1
+  })
+  status: number;
+
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
+  admin_id: number;
+
   @CreateDateColumn()
   created_at!: Date;
 
