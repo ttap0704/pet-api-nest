@@ -60,6 +60,8 @@ export class SuperService {
       },
     })
 
+    console.log(accommotion_count)
+
     for (const accommodation of accommotion_list) {
       const user = await this.usersRepository.findOne({ where: { id: accommodation.admin_id } })
       const business = await this.businessRepository.findOne({ where: { id: user.business_id } })

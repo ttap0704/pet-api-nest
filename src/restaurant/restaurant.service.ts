@@ -44,7 +44,7 @@ export class RestaurantService {
   ) { }
 
   public async getRestaurantList(types: string, location: string) {
-    const require = { type: types ? In(types.split(',')) : In([1, 2, 3, 4]) }
+    const require = { type: types ? In(types.split(',')) : In([1, 2, 3, 4]), status: 1 }
 
     const restaurant_list: Restaurant[] = await this.restaurantRepository.find({
       order: { id: 'DESC' },
@@ -92,7 +92,7 @@ export class RestaurantService {
 
   public async getRestaurantDetail(id: number) {
     const restaurant: Restaurant = await this.restaurantRepository.findOne({
-      where: { id },
+      where: { id, status: 1 },
       relations: []
     })
 

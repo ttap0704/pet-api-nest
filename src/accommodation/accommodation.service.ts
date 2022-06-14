@@ -37,7 +37,7 @@ export class AccommodationService {
   ) { }
 
   public async getAccommodationList(types: string, location: string) {
-    const require = { type: types ? In(types.split(',')) : In([1, 2, 3, 4]) }
+    const require = { type: types ? In(types.split(',')) : In([1, 2, 3, 4]), status: 1 }
 
     const accommodation_list: Accommodation[] = await this.accommodationRepository.find({
       order: { id: 'DESC' },
@@ -50,7 +50,6 @@ export class AccommodationService {
         {
           ...require,
           sigungu: Like(`%${location}%`),
-
         },
         {
           ...require,
@@ -85,7 +84,7 @@ export class AccommodationService {
 
   public async getAccommodationDetail(id: number) {
     const accommodation: Accommodation = await this.accommodationRepository.findOne({
-      where: { id },
+      where: { id, status: 1 },
       relations: ['accommodation_peak_season']
     })
 
