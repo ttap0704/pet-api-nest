@@ -10,6 +10,8 @@ import { EntireMenuCategoryRepository } from 'src/entire_menu_category/entities/
 import { ExposureMenuRepository } from 'src/exposure_menu/entities/exposure_menu.repository';
 import { ImagesRepository } from 'src/images/entities/images.repository';
 import { JoinCertificationRepository } from 'src/join_certification/entities/join_certification.repository';
+import { NoticeRepository } from 'src/notice/entities/notice.repository';
+import { NoticeService } from 'src/notice/notice.service';
 import { RestaurantRepository } from 'src/restaurant/entities/restaurant.repository';
 import { RestaurantService } from 'src/restaurant/restaurant.service';
 import { RestaurantViewsCountRepository } from 'src/restaurant_views_count/entities/restaurant_views_count.repository';
@@ -33,8 +35,9 @@ import { SuperService } from './super.service';
     ExposureMenuRepository,
     AccommodationViewsCountRepository,
     RestaurantViewsCountRepository,
+    NoticeRepository
   ])],
   controllers: [SuperController],
-  providers: [SuperService, RestaurantService, AccommodationService]
+  providers: [SuperService, RestaurantService, AccommodationService, NoticeService]
 })
 export class SuperModule { }

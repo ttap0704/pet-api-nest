@@ -21,7 +21,7 @@ export class Images {
   @Column({
     type: 'int',
     nullable: false,
-    comment: '1: Restaurant / 11: ExposureMenu / 2: Accommodation / 21: Rooms'
+    comment: '1: Restaurant / 11: ExposureMenu / 2: Accommodation / 21: Rooms /: 100: Notice'
   })
   category: number;
 

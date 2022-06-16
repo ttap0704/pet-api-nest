@@ -19,6 +19,7 @@ import { ExposureMenuModule } from './exposure_menu/exposure_menu.module';
 import { EntireMenuModule } from './entire_menu/entire_menu.module';
 import { EntireMenuCategoryModule } from './entire_menu_category/entire_menu_category.module';
 import { SuperModule } from './super/super.module';
+import { NoticeModule } from './notice/notice.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { SuperModule } from './super/super.module';
     EntireMenuModule,
     EntireMenuCategoryModule,
     SuperModule,
+    NoticeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
