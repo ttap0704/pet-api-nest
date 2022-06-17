@@ -11,6 +11,13 @@ export class Notice {
 
   @Column({
     type: 'varchar',
+    length: 2000,
+    nullable: false,
+  })
+  title: string;
+
+  @Column({
+    type: 'varchar',
     length: 10000,
     nullable: false,
   })
@@ -22,6 +29,13 @@ export class Notice {
     comment: '1: User / 2: Admin'
   })
   target: number;
+
+  @Column({
+    type: 'smallint',
+    nullable: false,
+    default: 1
+  })
+  status: number;
 
   @CreateDateColumn()
   created_at!: Date;

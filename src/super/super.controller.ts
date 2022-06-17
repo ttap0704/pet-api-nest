@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AccommodationService } from 'src/accommodation/accommodation.service';
 import { UpdateAccommodationDto } from 'src/accommodation/dto/update-accommodation.dto';
 import { CreateNoticeDto } from 'src/notice/dto/create-notice.dto';
+import { UpdateNoticeDto } from 'src/notice/dto/update-notice.dto';
 import { NoticeService } from 'src/notice/notice.service';
 import { UpdateRestaurantDto } from 'src/restaurant/dto/update-restaurant';
 import { RestaurantService } from 'src/restaurant/restaurant.service';
@@ -41,13 +42,28 @@ export class SuperController {
     return await this.noticeService.createNotice(data);
   }
 
-  @Get('/notice/:id')
-  public async getNoticeDetail(@Param('id') id: number) {
-    return await this.noticeService.getNoticeDetail(id);
+  @Post('/notice/:notice_id/info')
+  public async updateNotice(@Param('notice_id') notice_id: number, @Body() data: UpdateNoticeDto) {
+    return await this.noticeService.updateNotice(notice_id, data);
+  }
+
+  @Post('/notice/:notice_id/delete')
+  public async deleteNotice(@Param('notice_id') notice_id: number) {
+    return await this.noticeService.deleteNotice(notice_id);
+  }
+
+  @Get('/notice')
+  public async getNotice(@Query('target') target: number, @Query('page') page: number) {
+    return await this.noticeService.getNotice(target, page);
   }
 
   @Get('/notice/last-id')
   public async getLastNoticeId() {
     return await this.noticeService.getLastNoticeId();
+  }
+
+  @Get('/notice/:id')
+  public async getNoticeDetail(@Param('id') id: number) {
+    return await this.noticeService.getNoticeDetail(id);
   }
 }
