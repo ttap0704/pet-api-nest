@@ -52,6 +52,34 @@ export class AuthService {
     } else {
       return user;
     }
+  }
 
+  async validateSuper(data: LoginUsersDto): Promise<{ pass: boolean, message?: string, user?: Users }> {
+    const { login_id, password } = data;
+
+    if (login_id.length == 0 || password?.length == 0 || password == null) {
+      return { pass: false, message: 'Empty Data' }
+    }
+
+    const user = await this.usersService.findUser(data);
+    if (user) {
+      if (user.certification == 0) {
+        return { pass: false, message: 'Before Certification' }
+      }
+
+      const validation = await isHashValid(password, user.password)
+      if (user.type == 0) {
+        if (validation) {
+          return { pass: true, user }
+        } else {
+          return { pass: false, message: 'Wrong Password' }
+        }
+      } else {
+        return { pass: false, message: 'Not Super' }
+      }
+
+    } else {
+      return { pass: false, message: 'Wrong Email' }
+    }
   }
 }

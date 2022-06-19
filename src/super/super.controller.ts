@@ -53,17 +53,12 @@ export class SuperController {
   }
 
   @Get('/notice')
-  public async getNotice(@Query('target') target: number, @Query('page') page: number) {
-    return await this.noticeService.getNotice(target, page);
+  public async getNotice(@Query('target') target: string, @Query('page') page: number) {
+    return await this.noticeService.getNotice(target, page, true);
   }
 
   @Get('/notice/last-id')
   public async getLastNoticeId() {
     return await this.noticeService.getLastNoticeId();
-  }
-
-  @Get('/notice/:id')
-  public async getNoticeDetail(@Param('id') id: number) {
-    return await this.noticeService.getNoticeDetail(id);
   }
 }

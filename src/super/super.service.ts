@@ -5,7 +5,9 @@ import { AccommodationRepository } from 'src/accommodation/entities/accommodatio
 import { BusinessRepository } from 'src/business/entities/business.repository';
 import { Restaurant } from 'src/restaurant/entities/restaurant.entity';
 import { RestaurantRepository } from 'src/restaurant/entities/restaurant.repository';
+import { LoginUsersDto } from 'src/users/dto/login-users.dto';
 import { UsersRepository } from 'src/users/entities/users.repository';
+import { isHashValid } from 'utils/bcrypt';
 
 @Injectable()
 export class SuperService {
@@ -22,6 +24,35 @@ export class SuperService {
     @InjectRepository(BusinessRepository)
     private businessRepository: BusinessRepository
   ) { }
+
+  public async loginSuper(data: LoginUsersDto) {
+    const { login_id, password } = data;
+
+    if (login_id.length == 0 || password?.length == 0 || password == null) {
+      return { pass: false, message: 'Empty Data' }
+    }
+
+    const user = await this.usersRepository.findOne({ login_id });
+    if (user) {
+      if (user.certification == 0) {
+        return { pass: false, message: 'Before Certification' }
+      }
+
+      const validation = await isHashValid(password, user.password)
+      if (user.type == 0) {
+        if (validation) {
+          return { pass: true, user }
+        } else {
+          return { pass: false, message: 'Wrong Password' }
+        }
+      } else {
+        return { pass: false, message: 'Not Super' }
+      }
+
+    } else {
+      return { pass: false, message: 'Wrong Email' }
+    }
+  }
 
   public async getRestaurantProducts(page: number) {
     const list = [];

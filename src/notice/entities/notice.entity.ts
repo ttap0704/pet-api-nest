@@ -39,8 +39,5 @@ export class Notice {
 
   @CreateDateColumn()
   created_at!: Date;
-
-  @DeleteDateColumn()
-  deleted_at!: Date;
 }
 
