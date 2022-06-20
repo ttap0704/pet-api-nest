@@ -14,6 +14,7 @@ export class CreateUsersDto {
   @IsString()
   readonly nickname: string;
 
+  @IsOptional()
   @IsNumber()
   type: number;
 

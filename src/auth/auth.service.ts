@@ -38,48 +38,27 @@ export class AuthService {
     }
   }
 
-  public async loginUser(user: { pass: boolean, user: Users }) {
+  public async loginUser(user: { pass: boolean, user: Users }, is_super: boolean) {
     const cur_user = user.user;
     if (user.pass) {
-      return {
-        ...user,
-        token: this.jwtService.sign({
-          id: cur_user.id,
-          login_id: cur_user.login_id,
-          nickname: cur_user.nickname
-        })
-      }
-    } else {
-      return user;
-    }
-  }
-
-  async validateSuper(data: LoginUsersDto): Promise<{ pass: boolean, message?: string, user?: Users }> {
-    const { login_id, password } = data;
-
-    if (login_id.length == 0 || password?.length == 0 || password == null) {
-      return { pass: false, message: 'Empty Data' }
-    }
-
-    const user = await this.usersService.findUser(data);
-    if (user) {
-      if (user.certification == 0) {
-        return { pass: false, message: 'Before Certification' }
-      }
-
-      const validation = await isHashValid(password, user.password)
-      if (user.type == 0) {
-        if (validation) {
-          return { pass: true, user }
-        } else {
-          return { pass: false, message: 'Wrong Password' }
+      if (is_super && cur_user.type != 0) {
+        return {
+          pass: false,
+          message: 'Not Super'
         }
       } else {
-        return { pass: false, message: 'Not Super' }
+        return {
+          ...user,
+          token: this.jwtService.sign({
+            id: cur_user.id,
+            login_id: cur_user.login_id,
+            nickname: cur_user.nickname
+          })
+        }
       }
 
     } else {
-      return { pass: false, message: 'Wrong Email' }
+      return user;
     }
   }
 }

@@ -3,7 +3,6 @@ import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/local-auth.guard';
-import { LocalSuperAuthGuard } from './auth/local_super-auth.guard';
 
 @Controller()
 export class AppController {
@@ -20,12 +19,12 @@ export class AppController {
   @UseGuards(LocalAuthGuard)
   @Post('users/login')
   async loginUser(@Request() req) {
-    return await this.authService.loginUser(req.user);
+    return await this.authService.loginUser(req.user, false);
   }
 
-  @UseGuards(LocalSuperAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('super/login')
   async loginSuper(@Request() req) {
-    return await this.authService.loginUser(req.user);
+    return await this.authService.loginUser(req.user, true);
   }
 }
