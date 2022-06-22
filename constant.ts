@@ -5,6 +5,7 @@ export const EXPOSURE_MENU = 11;
 export const ENTIRE_MENU = 12;
 export const ROOMS = 21;
 
+export const DAILY = 50;
 export const NOTICE = 100;
 
 export const RESTAURANT_ENG = 'restaurant';
@@ -14,6 +15,7 @@ export const EXPOSURE_MENU_ENG = 'exposure_menu';
 export const ENTIRE_MENU_ENG = 'entire_menu';
 export const ROOMS_ENG = 'rooms';
 
+export const DAILY_ENG = 'daily'
 export const NOTICE_ENG = 'notice'
 
 export const CONTENTS_CODE: {
@@ -24,6 +26,7 @@ export const CONTENTS_CODE: {
   'entire_menu': ENTIRE_MENU,
   'accommodation': ACCOMMODATION,
   'rooms': ROOMS,
+  'daily': DAILY,
   'notice': NOTICE
 };
 
@@ -35,6 +38,7 @@ export const MODEL_STRING: {
   entire_menu: 'EntireMenu',
   accommodation: 'Accommodation',
   rooms: 'Rooms',
+  daily: 'Daily',
   notice: 'Notice'
 };
 
@@ -55,6 +59,7 @@ export const UPLOAD_PATH_ENG: {
   [EXPOSURE_MENU_ENG]: '/exposure_menu/',
   [ACCOMMODATION_ENG]: '/accommodation/',
   [ROOMS_ENG]: '/rooms/',
+  [DAILY_ENG]: '/daily/',
   [NOTICE_ENG]: '/notice/'
 };
 
@@ -66,17 +71,8 @@ export const CATEGORY_LIST: {
   [ENTIRE_MENU]: 'EntireMenu',
   [ACCOMMODATION]: 'Accomodation',
   [ROOMS]: 'Rooms',
+  [DAILY]: 'Daily',
   [NOTICE]: 'Notice'
-};
-
-export const IMAGES_ID_LIST: {
-  [prop: number]: any;
-} = {
-  [RESTAURANT]: 'restaurant_id',
-  [EXPOSURE_MENU]: 'exposure_menu_id',
-  [ACCOMMODATION]: 'accommodation_id',
-  [ROOMS]: 'rooms_id',
-  [NOTICE]: 'notice_id'
 };
 
 export const ACCOMMODATION_BUSINESS_CODE_LIST = [

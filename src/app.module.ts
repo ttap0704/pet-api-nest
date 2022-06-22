@@ -20,6 +20,7 @@ import { EntireMenuModule } from './entire_menu/entire_menu.module';
 import { EntireMenuCategoryModule } from './entire_menu_category/entire_menu_category.module';
 import { SuperModule } from './super/super.module';
 import { NoticeModule } from './notice/notice.module';
+import { DailyModule } from './daily/daily.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { NoticeModule } from './notice/notice.module';
     EntireMenuCategoryModule,
     SuperModule,
     NoticeModule,
+    DailyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
