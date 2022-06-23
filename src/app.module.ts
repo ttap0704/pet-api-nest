@@ -21,6 +21,7 @@ import { EntireMenuCategoryModule } from './entire_menu_category/entire_menu_cat
 import { SuperModule } from './super/super.module';
 import { NoticeModule } from './notice/notice.module';
 import { DailyModule } from './daily/daily.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { DailyModule } from './daily/daily.module';
     SuperModule,
     NoticeModule,
     DailyModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
