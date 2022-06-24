@@ -56,4 +56,8 @@ export class CommentService {
 
     return final_list;
   }
+
+  public async deleteComment(id: number) {
+    return await this.commentRepository.delete({ id })
+  }
 }
