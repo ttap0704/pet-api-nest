@@ -6,7 +6,9 @@ import { BusinessRepository } from 'src/business/entities/business.repository';
 import { Restaurant } from 'src/restaurant/entities/restaurant.entity';
 import { RestaurantRepository } from 'src/restaurant/entities/restaurant.repository';
 import { LoginUsersDto } from 'src/users/dto/login-users.dto';
+import { Users } from 'src/users/entities/users.entity';
 import { UsersRepository } from 'src/users/entities/users.repository';
+import { Not } from 'typeorm';
 import { isHashValid } from 'utils/bcrypt';
 
 @Injectable()
@@ -104,5 +106,40 @@ export class SuperService {
       })
     }
     return { count: accommotion_count, rows: list }
+  }
+
+  public async getAllUsers(page: number) {
+    const list = [];
+    const users_count = await this.usersRepository.count({ where: { type: Not(0) } })
+    const users_list: Users[] = await this.usersRepository.find({
+      where: {
+        type: Not(0),
+      },
+      take: 5,
+      skip: 5 * (Number(page) - 1),
+      order: {
+        id: 'DESC',
+      },
+    })
+
+    for (const user of users_list) {
+      let type = '';
+      if (user.type == 1) {
+        type = '음식점 관리자';
+      } else if (user.type == 2) {
+        type = '숙박업소 관리자'
+      } else {
+        type = '일반 유저'
+      }
+
+      list.push({
+        id: user.id,
+        email: user.login_id,
+        type,
+        phone: user.phone,
+        created_at: user.created_at
+      })
+    }
+    return { count: users_count, rows: list }
   }
 }

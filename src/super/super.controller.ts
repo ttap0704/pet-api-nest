@@ -61,4 +61,9 @@ export class SuperController {
   public async getLastNoticeId() {
     return await this.noticeService.getLastNoticeId();
   }
+
+  @Get('users')
+  public async getAllUsers(@Query('page') page: number) {
+    return await this.superService.getAllUsers(page)
+  }
 }
