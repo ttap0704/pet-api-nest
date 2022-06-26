@@ -78,6 +78,13 @@ export class Users {
   certification: number;
 
   @Column({
+    type: 'tinyint',
+    default: 0,
+    nullable: false
+  })
+  warning: number;
+
+  @Column({
     type: 'int',
     nullable: true
   })

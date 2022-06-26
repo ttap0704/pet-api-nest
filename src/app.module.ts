@@ -22,6 +22,7 @@ import { SuperModule } from './super/super.module';
 import { NoticeModule } from './notice/notice.module';
 import { DailyModule } from './daily/daily.module';
 import { CommentModule } from './comment/comment.module';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { CommentModule } from './comment/comment.module';
     NoticeModule,
     DailyModule,
     CommentModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

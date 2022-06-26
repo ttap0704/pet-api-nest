@@ -115,4 +115,14 @@ export const RESTAURANT_BUSINESS_CODE_LIST = [
   '간이 음식 포장 판매 전문점',
   '기타 비알코올 음료점업',
   '이동 음식점업',
-]
+];
+
+export const REPORT_REASONS = [
+  '스팸',
+  '광고성 게시물',
+  '욕설 및 비방',
+  '음란물 배포',
+  '지적 재산권 침해',
+  '거짓 정보',
+  '불법 상품 판매',
+];
