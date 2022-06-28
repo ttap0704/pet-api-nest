@@ -22,4 +22,9 @@ export class CommentController {
   public async getComments(@Param('category') category: number, @Param('target_id') target_id: number, @Query('skip') skip: number) {
     return await this.commentService.getComments(category, target_id, skip)
   }
+
+  @Get('/:comment_id')
+  public async getCommentDetail(@Param('comment_id') comment_id: number) {
+    return await this.commentService.getCommentDetail(comment_id);
+  }
 }

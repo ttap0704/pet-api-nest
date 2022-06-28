@@ -57,6 +57,11 @@ export class CommentService {
     return final_list;
   }
 
+  public async getCommentDetail(comment_id: number) {
+    const comment = await this.commentRepository.findOne({ where: { id: comment_id } });
+    return comment ?? { id: null }
+  }
+
   public async deleteComment(id: number) {
     return await this.commentRepository.delete({ id })
   }

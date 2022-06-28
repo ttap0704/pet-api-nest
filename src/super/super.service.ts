@@ -12,7 +12,7 @@ import { Users } from 'src/users/entities/users.entity';
 import { UsersRepository } from 'src/users/entities/users.repository';
 import { Not } from 'typeorm';
 import { isHashValid } from 'utils/bcrypt';
-import { REPORT_REASONS } from '../../constant'
+import { REPORT_REASONS, CATEGORY_LIST_KOR } from '../../constant'
 
 @Injectable()
 export class SuperService {
@@ -166,10 +166,16 @@ export class SuperService {
 
       list.push({
         id: report.id,
+        target_id: report.target_id,
         reason,
+        category: CATEGORY_LIST_KOR[report.category],
         created_at: report.created_at
       })
     }
     return { count: reports_count, rows: list }
+  }
+
+  public async deleteReport(id: number) {
+    return await this.reportRepository.delete({ id })
   }
 }

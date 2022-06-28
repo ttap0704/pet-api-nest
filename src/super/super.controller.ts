@@ -1,11 +1,14 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AccommodationService } from 'src/accommodation/accommodation.service';
 import { UpdateAccommodationDto } from 'src/accommodation/dto/update-accommodation.dto';
+import { CommentService } from 'src/comment/comment.service';
 import { CreateNoticeDto } from 'src/notice/dto/create-notice.dto';
 import { UpdateNoticeDto } from 'src/notice/dto/update-notice.dto';
 import { NoticeService } from 'src/notice/notice.service';
 import { UpdateRestaurantDto } from 'src/restaurant/dto/update-restaurant';
 import { RestaurantService } from 'src/restaurant/restaurant.service';
+import { UpdateUsersDto } from 'src/users/dto/update-users.dto';
+import { UsersService } from 'src/users/users.service';
 import { SuperService } from './super.service';
 
 @Controller('super')
@@ -14,7 +17,9 @@ export class SuperController {
     private superService: SuperService,
     private restaurantService: RestaurantService,
     private accommodationService: AccommodationService,
-    private noticeService: NoticeService
+    private noticeService: NoticeService,
+    private usersService: UsersService,
+    private commentService: CommentService
   ) { }
 
   @Get('/product/restaurant')
@@ -67,8 +72,18 @@ export class SuperController {
     return await this.superService.getAllUsers(page)
   }
 
-  @Get('report')
+  @Get('/report')
   public async getReports(@Query('category') category: number, @Query('page') page: number) {
     return await this.superService.getReports(page, category)
+  }
+
+  @Post('/report/:report_id/delete')
+  public async deleteReport(@Param('report_id') report_id: number) {
+    return await this.superService.deleteReport(report_id);
+  }
+
+  @Post('/users/:user_id/warning')
+  public async sendWarning(@Param('user_id') user_id: number, @Body() update_data: UpdateUsersDto) {
+    return await this.usersService.updateUser(user_id, update_data)
   }
 }

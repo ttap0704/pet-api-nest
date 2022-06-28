@@ -52,4 +52,8 @@ export class DailyService {
     }
     return final_daily_list;
   }
+
+  public async getDailyDetail(id: number) {
+    return await this.dailyRepository.findOne({ where: { id } })
+  }
 }

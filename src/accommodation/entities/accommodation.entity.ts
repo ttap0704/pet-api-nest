@@ -110,6 +110,13 @@ export class Accommodation {
   introduction: string;
 
   @Column({
+    type: 'int',
+    nullable: false,
+    default: 0
+  })
+  warning: number;
+
+  @Column({
     type: 'smallint',
     nullable: false,
     default: 1

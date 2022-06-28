@@ -141,6 +141,13 @@ export class Restaurant {
   @Column({
     type: 'int',
     nullable: false,
+    default: 0
+  })
+  warning: number;
+
+  @Column({
+    type: 'int',
+    nullable: false,
   })
   admin_id: number;
 

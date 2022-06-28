@@ -7,6 +7,7 @@ import { CreateUsersDto } from './dto/create-users.dto';
 import { generateRandom } from 'utils/tools';
 import { getCertificationContents, sendEmail } from 'utils/email_tools';
 import { JoinCertificationRepository } from 'src/join_certification/entities/join_certification.repository';
+import { UpdateUsersDto } from './dto/update-users.dto';
 
 @Injectable()
 export class UsersService {
@@ -81,5 +82,17 @@ export class UsersService {
     } else {
       return { pass: false, message: 'Wrong Email' }
     }
+  }
+
+  public async updateUser(id: number, update_data: UpdateUsersDto) {
+    const keys = [...Object.keys(update_data)];
+    if (keys.includes('warning')) {
+      const user = await this.usersRepository.findOne({ where: { id } })
+      console.log(user)
+      const warning_num = user.warning + 1;
+
+      update_data.warning = warning_num;
+    }
+    return await this.usersRepository.update({ id }, { ...update_data })
   }
 }

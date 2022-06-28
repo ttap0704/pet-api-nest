@@ -6,6 +6,7 @@ export const ENTIRE_MENU = 12;
 export const ROOMS = 21;
 
 export const DAILY = 50;
+export const COMMENT = 60;
 export const NOTICE = 100;
 
 export const RESTAURANT_ENG = 'restaurant';
@@ -16,6 +17,7 @@ export const ENTIRE_MENU_ENG = 'entire_menu';
 export const ROOMS_ENG = 'rooms';
 
 export const DAILY_ENG = 'daily'
+export const COMNENT_ENG = 'comment';
 export const NOTICE_ENG = 'notice'
 
 export const CONTENTS_CODE: {
@@ -27,6 +29,7 @@ export const CONTENTS_CODE: {
   'accommodation': ACCOMMODATION,
   'rooms': ROOMS,
   'daily': DAILY,
+  'comment': COMMENT,
   'notice': NOTICE
 };
 
@@ -39,6 +42,7 @@ export const MODEL_STRING: {
   accommodation: 'Accommodation',
   rooms: 'Rooms',
   daily: 'Daily',
+  comment: 'Comment',
   notice: 'Notice'
 };
 
@@ -72,7 +76,21 @@ export const CATEGORY_LIST: {
   [ACCOMMODATION]: 'Accomodation',
   [ROOMS]: 'Rooms',
   [DAILY]: 'Daily',
+  [COMMENT]: 'Comment',
   [NOTICE]: 'Notice'
+};
+
+export const CATEGORY_LIST_KOR: {
+  [prop: number]: any;
+} = {
+  [RESTAURANT]: '음식점',
+  [EXPOSURE_MENU]: '대표 메뉴',
+  [ENTIRE_MENU]: '전체 메뉴',
+  [ACCOMMODATION]: '숙박업소',
+  [ROOMS]: '객실',
+  [DAILY]: '일상',
+  [COMMENT]: '댓글',
+  [NOTICE]: '공지사항/이벤트'
 };
 
 export const ACCOMMODATION_BUSINESS_CODE_LIST = [
