@@ -179,6 +179,14 @@ export class AccommodationService {
   }
 
   public async updateAccommodation(accommodation_id: number, update_data: UpdateAccommodationDto) {
+    const keys = [...Object.keys(update_data)];
+    if (keys.includes('warning')) {
+      const user = await this.accommodationRepository.findOne({ where: { id: accommodation_id } })
+      const warning_num = user.warning + 1;
+
+      update_data.warning = warning_num;
+    }
+
     return await this.accommodationRepository.update({ id: accommodation_id }, { ...update_data })
   }
 

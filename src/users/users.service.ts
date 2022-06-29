@@ -88,7 +88,6 @@ export class UsersService {
     const keys = [...Object.keys(update_data)];
     if (keys.includes('warning')) {
       const user = await this.usersRepository.findOne({ where: { id } })
-      console.log(user)
       const warning_num = user.warning + 1;
 
       update_data.warning = warning_num;

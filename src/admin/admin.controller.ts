@@ -17,7 +17,7 @@ import { CreateRoomsDto } from 'src/rooms/dto/create-rooms.dto';
 import { UpdateRoomsDto } from 'src/rooms/dto/update-rooms.dto';
 import { RestaurantService } from 'src/restaurant/restaurant.service';
 import { Restaurant } from 'src/restaurant/entities/restaurant.entity';
-import { UpdateRestaurantDto } from 'src/restaurant/dto/update-restaurant';
+import { UpdateRestaurantDto } from 'src/restaurant/dto/update-restaurant.dto';
 import { UpdateEntireMenuDto } from 'src/entire_menu/dto/update-entire_menu.dto';
 import { EntireMenuService } from 'src/entire_menu/entire_menu.service';
 import { EntireMenuCategoryService } from 'src/entire_menu_category/entire_menu_category.service';

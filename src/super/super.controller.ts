@@ -5,7 +5,7 @@ import { CommentService } from 'src/comment/comment.service';
 import { CreateNoticeDto } from 'src/notice/dto/create-notice.dto';
 import { UpdateNoticeDto } from 'src/notice/dto/update-notice.dto';
 import { NoticeService } from 'src/notice/notice.service';
-import { UpdateRestaurantDto } from 'src/restaurant/dto/update-restaurant';
+import { UpdateRestaurantDto } from 'src/restaurant/dto/update-restaurant.dto';
 import { RestaurantService } from 'src/restaurant/restaurant.service';
 import { UpdateUsersDto } from 'src/users/dto/update-users.dto';
 import { UsersService } from 'src/users/users.service';
@@ -32,12 +32,12 @@ export class SuperController {
     return await this.superService.getAccommodationProducts(page)
   }
 
-  @Post('/product/restaurant/:restaurant_id/status')
+  @Post('/product/restaurant/:restaurant_id/info')
   public async setRestaurantStatus(@Param('restaurant_id') restaurant_id: number, @Body() data: UpdateRestaurantDto): Promise<any> {
     return await this.restaurantService.updateRestaurant(restaurant_id, data)
   }
 
-  @Post('/product/accommodation/:accommodation_id/status')
+  @Post('/product/accommodation/:accommodation_id/info')
   public async setAccommodationStatus(@Param('accommodation_id') accommodation_id: number, @Body() data: UpdateAccommodationDto): Promise<any> {
     return await this.accommodationService.updateAccommodation(accommodation_id, data)
   }

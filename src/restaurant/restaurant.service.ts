@@ -9,7 +9,7 @@ import { Images } from 'src/images/entities/images.entity';
 import { ImagesRepository } from 'src/images/entities/images.repository';
 import { RestaurantViewsCountRepository } from 'src/restaurant_views_count/entities/restaurant_views_count.repository';
 import { In, Like } from 'typeorm';
-import { UpdateRestaurantDto } from './dto/update-restaurant';
+import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { Restaurant } from './entities/restaurant.entity';
 import { RestaurantRepository } from './entities/restaurant.repository';
 
@@ -209,6 +209,14 @@ export class RestaurantService {
   }
 
   public async updateRestaurant(restaurant_id: number, update_data: UpdateRestaurantDto) {
+    const keys = [...Object.keys(update_data)];
+    if (keys.includes('warning')) {
+      const user = await this.restaurantRepository.findOne({ where: { id: restaurant_id } })
+      const warning_num = user.warning + 1;
+
+      update_data.warning = warning_num;
+    }
+
     return await this.restaurantRepository.update({ id: restaurant_id }, { ...update_data })
   }
 

@@ -6,4 +6,8 @@ export class UpdateAccommodationDto extends PartialType(CreateAccommodationDto) 
   @IsOptional()
   @IsNumber()
   status: number;
+
+  @IsOptional()
+  @IsNumber()
+  warning: number;
 }
