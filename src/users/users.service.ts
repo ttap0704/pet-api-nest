@@ -84,6 +84,16 @@ export class UsersService {
     }
   }
 
+  public async checkNickname(nickname: string) {
+    const user = await this.usersRepository.findOne({ where: { nickname } });
+
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public async updateUser(id: number, update_data: UpdateUsersDto) {
     const keys = [...Object.keys(update_data)];
     if (keys.includes('warning')) {

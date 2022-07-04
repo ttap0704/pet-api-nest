@@ -14,6 +14,11 @@ export class UsersController {
     return 'get users'
   }
 
+  @Get('/:nickname')
+  public async checkNickname(@Param('nickname') nickname: string) {
+    return await this.usersService.checkNickname(nickname)
+  }
+
   @Post('/join')
   public async joinUser(@Body() data: CreateUsersDto) {
     return await this.usersService.joinUser(data);

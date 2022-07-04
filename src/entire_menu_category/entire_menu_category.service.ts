@@ -109,7 +109,6 @@ export class EntireMenuCategoryService {
   public async updateEntireMenuCategoryOrder(update_data: UpdateEntireMenuCategoryOrderDto[]) {
     let update_length = 0;
     for (const data of update_data) {
-      console.log(data.id, data.seq)
       const update_res = await this.entireMenuCategoryRepository.update({ id: data.id }, { seq: data.seq })
       update_length += update_res.affected
     }

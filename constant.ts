@@ -5,6 +5,7 @@ export const EXPOSURE_MENU = 11;
 export const ENTIRE_MENU = 12;
 export const ROOMS = 21;
 
+export const PROFILE = 0;
 export const DAILY = 50;
 export const COMMENT = 60;
 export const NOTICE = 100;
@@ -16,6 +17,7 @@ export const EXPOSURE_MENU_ENG = 'exposure_menu';
 export const ENTIRE_MENU_ENG = 'entire_menu';
 export const ROOMS_ENG = 'rooms';
 
+export const PROFILE_ENG = 'profile';
 export const DAILY_ENG = 'daily'
 export const COMNENT_ENG = 'comment';
 export const NOTICE_ENG = 'notice'
@@ -28,6 +30,7 @@ export const CONTENTS_CODE: {
   'entire_menu': ENTIRE_MENU,
   'accommodation': ACCOMMODATION,
   'rooms': ROOMS,
+  'profile': PROFILE,
   'daily': DAILY,
   'comment': COMMENT,
   'notice': NOTICE
@@ -41,6 +44,7 @@ export const MODEL_STRING: {
   entire_menu: 'EntireMenu',
   accommodation: 'Accommodation',
   rooms: 'Rooms',
+  profile: 'Profile',
   daily: 'Daily',
   comment: 'Comment',
   notice: 'Notice'
@@ -53,6 +57,7 @@ export const UPLOAD_PATH: {
   [EXPOSURE_MENU]: '/exposure_menu/',
   [ACCOMMODATION]: '/accommodation/',
   [ROOMS]: '/rooms/',
+  [PROFILE]: '/profile/',
   [NOTICE]: '/notice/'
 };
 
@@ -63,6 +68,7 @@ export const UPLOAD_PATH_ENG: {
   [EXPOSURE_MENU_ENG]: '/exposure_menu/',
   [ACCOMMODATION_ENG]: '/accommodation/',
   [ROOMS_ENG]: '/rooms/',
+  [PROFILE_ENG]: '/profile/',
   [DAILY_ENG]: '/daily/',
   [NOTICE_ENG]: '/notice/'
 };
@@ -75,6 +81,7 @@ export const CATEGORY_LIST: {
   [ENTIRE_MENU]: 'EntireMenu',
   [ACCOMMODATION]: 'Accomodation',
   [ROOMS]: 'Rooms',
+  [PROFILE]: 'Profile',
   [DAILY]: 'Daily',
   [COMMENT]: 'Comment',
   [NOTICE]: 'Notice'
