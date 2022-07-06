@@ -23,6 +23,7 @@ import { NoticeModule } from './notice/notice.module';
 import { DailyModule } from './daily/daily.module';
 import { CommentModule } from './comment/comment.module';
 import { ReportModule } from './report/report.module';
+import { UsersTokenModule } from './users_token/users_token.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { ReportModule } from './report/report.module';
     DailyModule,
     CommentModule,
     ReportModule,
+    UsersTokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],
