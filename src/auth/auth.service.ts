@@ -52,7 +52,6 @@ export class AuthService {
     if (token_data) {
       try {
         const check_expired = await this.jwtService.verifyAsync(token_data.refresh_token, { secret: jwtConstants.refresh_secret })
-        console.log(check_expired);
         if (check_expired) {
           const user = await this.usersRepository.findOne({ where: { id: token_data.user_id } })
           const new_token_data = {
@@ -61,9 +60,8 @@ export class AuthService {
             nickname: user.nickname
           }
           const new_token = await this.jwtService.sign(new_token_data);
-          console.log(new_token)
 
-          await this.usersTokenRepository.update({ ip, user_id: user.id }, { access_token: new_token })
+          await this.usersTokenRepository.update({ ip: '::1', user_id: user.id }, { access_token: new_token })
           return {
             pass: true,
             new_token
@@ -99,7 +97,7 @@ export class AuthService {
         }
         const access_token = this.jwtService.sign(token_data)
         const refresh_token = await this.jwtService.signAsync(token_data, {
-          expiresIn: '2m',
+          expiresIn: '1d',
           secret: jwtConstants.refresh_secret
         })
 
@@ -111,7 +109,7 @@ export class AuthService {
         }
         const check_token = await this.usersTokenRepository.findOne({ where: { ip, user_id: cur_user.id } });
         if (check_token) {
-          await this.usersTokenRepository.update({ ip: check_token.ip, user_id: check_token.user_id }, insert_token_data);
+          await this.usersTokenRepository.update({ ip: '::1', user_id: check_token.user_id }, insert_token_data);
         } else {
           await this.usersTokenRepository.save(insert_token_data);
         }

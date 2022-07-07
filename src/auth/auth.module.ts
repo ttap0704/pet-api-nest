@@ -22,7 +22,7 @@ import { UsersRepository } from 'src/users/entities/users.repository';
     ]),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '20s' },
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy, UsersTokenService],
