@@ -26,21 +26,26 @@ export class AuthService {
   async validateUser(data: LoginUsersDto): Promise<{ pass: boolean, message?: string, user?: Users }> {
     const { login_id, password } = data;
 
-    if (login_id.length == 0 || password?.length == 0 || password == null) {
+    const user = await this.usersService.findUser(data);
+    if (login_id.length == 0 || (user && user.kakao == 0 && user.naver == 0 && password?.length == 0 || password == null)) {
       return { pass: false, message: 'Empty Data' }
     }
 
-    const user = await this.usersService.findUser(data);
     if (user) {
       if (user.certification == 0) {
         return { pass: false, message: 'Before Certification' }
       }
 
-      const validation = await isHashValid(password, user.password)
-      if (validation) {
+
+      if (user.kakao == 1 || user.naver == 1) {
         return { pass: true, user }
       } else {
-        return { pass: false, message: 'Wrong Password' }
+        const validation = await isHashValid(password, user.password)
+        if (validation) {
+          return { pass: true, user }
+        } else {
+          return { pass: false, message: 'Wrong Password' }
+        }
       }
     } else {
       return { pass: false, message: 'Wrong Email' }

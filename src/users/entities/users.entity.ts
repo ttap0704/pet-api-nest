@@ -22,14 +22,14 @@ export class Users {
   @Column({
     type: 'varchar',
     length: 100,
-    nullable: false
+    nullable: true
   })
   password: string;
 
   @Column({
     type: 'varchar',
     length: 100,
-    nullable: false
+    nullable: true,
   })
   name: string;
 
@@ -76,6 +76,34 @@ export class Users {
     nullable: false
   })
   certification: number;
+
+  @Column({
+    type: 'tinyint',
+    default: 0,
+    nullable: true
+  })
+  kakao: number;
+
+  @Column({
+    type: 'tinyint',
+    default: 0,
+    nullable: true
+  })
+  naver: number;
+
+  @Column({
+    type: 'tinyint',
+    default: 0,
+    nullable: true
+  })
+  male: number;
+
+  @Column({
+    type: 'int',
+    default: 0,
+    nullable: true
+  })
+  birth_year: number;
 
   @Column({
     type: 'tinyint',

@@ -24,6 +24,16 @@ export class UsersService {
     return await this.usersRepository.findOne({ login_id })
   }
 
+  public async getPlatformUser(platform: 'naver' | 'kakao', login_id: string) {
+    const user = await this.usersRepository.findOne({
+      where: {
+        [platform]: 1,
+        login_id
+      }
+    })
+    return user ?? false
+  }
+
   public async joinUser(data: CreateUsersDto) {
     try {
 
@@ -40,11 +50,11 @@ export class UsersService {
 
       const user = await this.usersRepository.createUser(data);
 
-      if (user) {
+      if (user && (user.kakao == 0 && user.naver == 0)) {
         const random_num = generateRandom(111111, 999999);
         const cert_res = await this.joinCertificationRepository.createJoinCertification({ cert_num: `${random_num}`, admin_id: user.id })
         const email_data = {
-          to_name: data.name,
+          to_name: data.nickname,
           to: data.login_id,
           subject: '[어디어디] 회원가입 이메일 인증',
           message: getCertificationContents(random_num, `http://localhost:3001/join/certification/${cert_res.id}`)
@@ -53,7 +63,12 @@ export class UsersService {
 
         return { pass: true, user, cert_res };
       } else {
-        return { pass: false, message: 'Error Join' };
+        if (user.kakao == 1 || user.naver == 1) {
+          return { pass: true, user };
+        } else {
+          return { pass: false, message: 'Error Join' };
+        }
+
       }
     } catch (err) {
       throw new Error(err)

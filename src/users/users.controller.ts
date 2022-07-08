@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { CreateUsersDto } from './dto/create-users.dto';
 import { UpdateUsersDto } from './dto/update-users.dto';
 import { UsersService } from './users.service';
@@ -12,6 +12,11 @@ export class UsersController {
   @Get('')
   public async getUsers() {
     return 'get users'
+  }
+
+  @Get('/platform/:platform')
+  public async getPlatformUser(@Param('platform') platform: 'naver' | 'kakao', @Query('login_id') login_id: string) {
+    return await this.usersService.getPlatformUser(platform, login_id)
   }
 
   @Get('/:nickname')

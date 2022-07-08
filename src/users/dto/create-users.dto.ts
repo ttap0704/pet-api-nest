@@ -5,14 +5,26 @@ export class CreateUsersDto {
   @IsString()
   readonly login_id: string;
 
+  @IsOptional()
   @IsString()
   readonly password: string;
 
   @IsString()
-  readonly name: string;
-
-  @IsString()
   readonly nickname: string;
+
+  @IsOptional()
+  readonly kakao: number;
+
+  @IsOptional()
+  readonly naver: number;
+
+  @IsOptional()
+  @IsNumber()
+  readonly male: number;
+
+  @IsOptional()
+  @IsNumber()
+  readonly birth_year: number;
 
   @IsOptional()
   @IsNumber()

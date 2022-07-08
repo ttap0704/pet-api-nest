@@ -100,7 +100,7 @@ export class AdminService {
         const random_num = generateRandom(111111, 999999);
         const cert_res = await this.joinCertificationRepository.createJoinCertification({ cert_num: `${random_num}`, admin_id: user.id })
         const email_data = {
-          to_name: join_data.name,
+          to_name: join_data.nickname,
           to: join_data.login_id,
           subject: '[어디어디] 회원가입 이메일 인증',
           message: getCertificationContents(random_num, `http://localhost:3001/admin/join/certification/${cert_res.id}`)

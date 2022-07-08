@@ -10,12 +10,16 @@ export class UsersRepository extends Repository<Users> {
     const user = new Users();
 
     user.login_id = createData.login_id;
-    user.name = createData.name;
     user.nickname = createData.nickname;
-    user.password = await hash(createData.password);
+    user.password = createData.password ? await hash(createData.password) : null;
     user.type = createData.type;
     user.business_id = createData.business_id;
     user.business = createData.business;
+    user.kakao = createData.kakao ?? null;
+    user.naver = createData.naver ?? null;
+    user.certification = createData.kakao || createData.naver ? 1 : 0
+    user.male = createData.male
+    user.birth_year = createData.birth_year
 
     await this.save(user);
 
