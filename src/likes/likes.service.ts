@@ -37,11 +37,25 @@ export class LikesService {
       }
     });
 
-    if (check.id > 0) {
+    if (check && check.id > 0) {
       return { id: check.id };
     } else {
       return await this.likesRepository.save(data);
     }
+  }
 
+  public async cancelLikeProduct(data: CreateLikeDto) {
+    const check = await this.likesRepository.findOne({
+      where: {
+        ...data
+      }
+    });
+
+    if (check && check.id > 0) {
+      const delete_res = await this.likesRepository.delete({ ...data })
+      return delete_res.affected == 1;
+    } else {
+      return true;
+    }
   }
 }

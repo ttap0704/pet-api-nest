@@ -37,6 +37,11 @@ export class UsersController {
     return await this.likesService.likeProduct(data);
   }
 
+  @Post('/like-product/cancel')
+  public async cancelLikeProduct(@Body() data: CreateLikeDto) {
+    return await this.likesService.cancelLikeProduct(data);
+  }
+
   @Post('/join')
   public async joinUser(@Body() data: CreateUsersDto) {
     return await this.usersService.joinUser(data);
