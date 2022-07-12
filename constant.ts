@@ -87,6 +87,20 @@ export const CATEGORY_LIST: {
   [NOTICE]: 'Notice'
 };
 
+export const CATEGORY_LIST_LOW: {
+  [prop: number]: any;
+} = {
+  [RESTAURANT]: 'restarunt',
+  [EXPOSURE_MENU]: 'exposure_menu',
+  [ENTIRE_MENU]: 'entire_menu',
+  [ACCOMMODATION]: 'accomodation',
+  [ROOMS]: 'rooms',
+  [PROFILE]: 'profile',
+  [DAILY]: 'daily',
+  [COMMENT]: 'comment',
+  [NOTICE]: 'notice'
+};
+
 export const CATEGORY_LIST_KOR: {
   [prop: number]: any;
 } = {

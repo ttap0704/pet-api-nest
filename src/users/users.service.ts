@@ -8,6 +8,8 @@ import { generateRandom } from 'utils/tools';
 import { getCertificationContents, sendEmail } from 'utils/email_tools';
 import { JoinCertificationRepository } from 'src/join_certification/entities/join_certification.repository';
 import { UpdateUsersDto } from './dto/update-users.dto';
+import { CreateLikeDto } from 'src/likes/dto/create-like.dto';
+import { LikesRepository } from 'src/likes/entities/likes.repository';
 
 @Injectable()
 export class UsersService {

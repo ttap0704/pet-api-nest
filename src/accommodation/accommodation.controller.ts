@@ -9,8 +9,8 @@ export class AccommodationController {
   ) { }
 
   @Get('')
-  public async getAccommodationList(@Query('types') types: string, @Query('location') location: string): Promise<any> {
-    return await this.accommodationService.getAccommodationList(types, location);
+  public async getAccommodationList(@Query('types') types: string, @Query('location') location: string, @Query('recent') recent?: string): Promise<any> {
+    return await this.accommodationService.getAccommodationList(types, location, recent);
   }
 
   @Get('/:accommodation_id')

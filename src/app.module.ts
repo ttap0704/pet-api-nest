@@ -24,6 +24,7 @@ import { DailyModule } from './daily/daily.module';
 import { CommentModule } from './comment/comment.module';
 import { ReportModule } from './report/report.module';
 import { UsersTokenModule } from './users_token/users_token.module';
+import { LikesModule } from './likes/likes.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { UsersTokenModule } from './users_token/users_token.module';
     CommentModule,
     ReportModule,
     UsersTokenModule,
+    LikesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

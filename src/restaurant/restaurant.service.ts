@@ -43,8 +43,11 @@ export class RestaurantService {
     private restaurantViewsCountRepository: RestaurantViewsCountRepository
   ) { }
 
-  public async getRestaurantList(types: string, location: string) {
+  public async getRestaurantList(types: string, location: string, recent?: string) {
     const require = { type: types ? In(types.split(',')) : In([1, 2, 3, 4]), status: 1 }
+    if (recent) {
+      require['id'] = In(recent.split(','))
+    }
 
     const restaurant_list: Restaurant[] = await this.restaurantRepository.find({
       order: { id: 'DESC' },

@@ -50,7 +50,8 @@ export class CommentService {
         writer_id: item.writer_id,
         nickname: item.writer.nickname,
         created_at: item.created_at,
-        target_id: item.target_id
+        target_id: item.target_id,
+        profile_path: item.writer.profile_path
       })
     }
 

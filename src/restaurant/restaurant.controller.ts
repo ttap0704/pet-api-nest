@@ -8,8 +8,8 @@ export class RestaurantController {
   ) { }
 
   @Get('')
-  public async getdRestaurantList(@Query('types') types: string, @Query('location') location: string): Promise<any> {
-    return await this.restaurantService.getRestaurantList(types, location);
+  public async getdRestaurantList(@Query('types') types: string, @Query('location') location: string, @Query('recent') recent?: string): Promise<any> {
+    return await this.restaurantService.getRestaurantList(types, location, recent);
   }
 
   @Get('/:restaurant_id')

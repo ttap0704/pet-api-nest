@@ -32,8 +32,8 @@ export class DailyService {
 
   public async getDailyList(page: number) {
     const daily_list: Daily[] = await this.dailyRepository.find({
-      take: 5,
-      skip: 5 * (Number(page) - 1),
+      take: 10,
+      skip: 10 * (Number(page) - 1),
       order: { id: 'DESC' },
       relations: ['writer']
     })

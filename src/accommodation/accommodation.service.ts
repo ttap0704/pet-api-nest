@@ -36,8 +36,11 @@ export class AccommodationService {
     private accommodationViewsCountRepository: AccommodationViewsCountRepository
   ) { }
 
-  public async getAccommodationList(types: string, location: string) {
+  public async getAccommodationList(types: string, location: string, recent?: string) {
     const require = { type: types ? In(types.split(',')) : In([1, 2, 3, 4]), status: 1 }
+    if (recent) {
+      require['id'] = In(recent.split(','))
+    }
 
     const accommodation_list: Accommodation[] = await this.accommodationRepository.find({
       order: { id: 'DESC' },
