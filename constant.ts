@@ -76,7 +76,7 @@ export const UPLOAD_PATH_ENG: {
 export const CATEGORY_LIST: {
   [prop: number]: any;
 } = {
-  [RESTAURANT]: 'Restarunt',
+  [RESTAURANT]: 'Restaurant',
   [EXPOSURE_MENU]: 'ExposureMenu',
   [ENTIRE_MENU]: 'EntireMenu',
   [ACCOMMODATION]: 'Accommodation',
@@ -90,7 +90,7 @@ export const CATEGORY_LIST: {
 export const CATEGORY_LIST_LOW: {
   [prop: number]: any;
 } = {
-  [RESTAURANT]: 'restarunt',
+  [RESTAURANT]: 'restaurant',
   [EXPOSURE_MENU]: 'exposure_menu',
   [ENTIRE_MENU]: 'entire_menu',
   [ACCOMMODATION]: 'accommodation',

@@ -62,7 +62,8 @@ export class AuthService {
           const new_token_data = {
             id: user.id,
             login_id: user.login_id,
-            nickname: user.nickname
+            nickname: user.nickname,
+            type: user.type
           }
           const new_token = await this.jwtService.sign(new_token_data);
 
@@ -86,7 +87,7 @@ export class AuthService {
     }
   }
 
-  public async loginUser(user: { pass: boolean, user: Users }, is_super: boolean, ip: string) {
+  public async loginUser(user: { pass: boolean, user: Users }, is_super: boolean, is_admin: boolean, ip: string) {
     const cur_user = user.user;
     if (user.pass) {
       if (is_super && cur_user.type != 0) {
@@ -94,11 +95,17 @@ export class AuthService {
           pass: false,
           message: 'Not Super'
         }
+      } else if (is_admin && ![1, 2].includes(cur_user.type)) {
+        return {
+          pass: false,
+          message: 'Not Admin'
+        }
       } else {
         const token_data = {
           id: cur_user.id,
           login_id: cur_user.login_id,
-          nickname: cur_user.nickname
+          nickname: cur_user.nickname,
+          type: cur_user.type
         }
         const access_token = this.jwtService.sign(token_data)
         const refresh_token = await this.jwtService.signAsync(token_data, {

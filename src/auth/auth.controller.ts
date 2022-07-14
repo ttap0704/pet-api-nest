@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Ip, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Ip, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
@@ -11,6 +11,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('')
   public async checkAuth(user: any) {
+    console.log(user);
     return { check: true }
   }
 

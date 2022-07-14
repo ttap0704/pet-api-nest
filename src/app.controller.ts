@@ -19,12 +19,18 @@ export class AppController {
   @UseGuards(LocalAuthGuard)
   @Post('users/login')
   async loginUser(@Request() req, @Ip() ip: string) {
-    return await this.authService.loginUser(req.user, false, ip);
+    return await this.authService.loginUser(req.user, false, false, ip);
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('admin/login')
+  async loginAdmin(@Request() req, @Ip() ip: string) {
+    return await this.authService.loginUser(req.user, false, true, ip);
   }
 
   @UseGuards(LocalAuthGuard)
   @Post('super/login')
   async loginSuper(@Request() req, @Ip() ip: string) {
-    return await this.authService.loginUser(req.user, true, ip);
+    return await this.authService.loginUser(req.user, true, true, ip);
   }
 }
